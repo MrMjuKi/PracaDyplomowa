@@ -1,0 +1,51 @@
+\chapter{Opis narzêdzi}
+Rozdzia³ jest poœwiêcony przedstawieniu oprogramowania, narzêdzi i jêzyka programowania jakie wykorzystano w pracy dyplomowej.
+\section{Narzêdzia s³u¿¹ce do audytowania bezpieczeñstwa}
+\subsection{Metasploit}
+Narzêdzie u¿ywane do audytów bezpieczeñstwa. S³u¿y do zautomatyzowanego skanowania aplikacji, us³ug, sieci w celu znalezienia jak najwiêkszej iloœci luk w zabezpieczeniach. Posiada bardzo szeroki wachlarz exploitów, które umo¿liwiaj¹ mu szukanie wspomnianych niedoci¹gniêæ w wielu ró¿nych us³ugach czy aplikacjach. Istnieje mo¿liwoœæ rozszerzenia ich o autorskie exploity umieszczone w Internecie.
+\subsection{SQL Map}
+Narzêdzie o otwartym kodzie Ÿród³owym wykorzystywane do testów penetracyjnych. Pomaga zautomatyzowaæ proces przejmowania kontroli nad serwerem bazy danych i umo¿liwia wykrywanie i wykorzystywanie b³êdów SQL Injection. Stosowany jest przy bazach danych takich jak: MySQL, Oracle, Microsoft SQL Server, IBM DB2, Firebird, HSQLDB, Sybase, SAP MaxDB, SQLite, Microsoft Access, PostgreSQL. Zaopatrzony jest w szeroki zakres narzêdzi, pocz¹wszy od database fingerprinting, przez pobieranie danych z bazy danych, dostêp do bazowego systemu plików, wykonywanie komend na systemie operacyjnym dziêki po³¹czeniu out-of-band, potê¿ny silnik detekcji, a skoñczywszy na  niszowej funkcjonalnoœci  w zaawansowanych testach penetracyjnych. Poni¿ej wymieniono przyk³adowe funkcjonalnoœci, na które zwraca uwagê autor Prakhar Prasad we fragmencie ksi¹¿ki pt. „Testy penetracyjne nowoczesnych serwisów. Kompendium in¿ynierów bezpieczeñstwa”:
+\begin{itemize}[leftmargin=1cm]
+	\item „Obs³uga ró¿nych technik wstrzykiwania kodu SQL:
+	\begin{itemize}[leftmargin=0.25cm]
+		\item wstrzykiwanie bazuj¹ce na b³êdzie,
+		\item wstrzykiwanie na œlepo,
+		\item wstrzykiwanie bazuj¹ce na czasie,
+		\item tworzenie stosów zapytañ.
+	\end{itemize}
+	\item Pobieranie i wysy³anie plików do serwera baz danych,
+	\item Obs³uga frameworka Metasploit,
+	\item Wbudowana obs³uga ³amania starszych funkcji skrótu np. MD5,
+	\item Mo¿liwoœæ sprawdzania zawartoœci baz danych np. tabel, pojedynczych kolumn,
+	\item Dzia³anie jako klient bazy danych, jeœli zapewni siê odpowiednie dane logowania \cite{PP17}”
+\end{itemize}
+\section{Narzêdzia u¿yte do zaimplementowania aplikacji}
+\subsection{MySQL}
+Nale¿y on do relacyjnych baz danych o otwartym kodzie Ÿród³owym. Organizuje i przechowuje dane w tabelach. W celu utworzenia relacji miêdzy dwoma tabelami wybierany jest konkretny typ danych z ka¿dej z nich, na podstawie którego jest tworzone ich powi¹zanie. Pozwalaj¹ one ustrukturyzowaæ dane. Dodatkowo analizowane narzêdzie korzysta z jêzyka Structured Query Language (SQL), umo¿liwiaj¹cego tworzenie kwerend, które pozwalaj¹ tworzyæ, modyfikowaæ, wprowadzaæ i odczytywaæ dane. Jest te¿ jedn¹ z najczêœciej wybieranych relacyjnych baz danych przy tworzeniu aplikacji na œwiecie. Wynika to z jego nastêpuj¹cych cech, które s¹ t³umaczeniem w³asnym, opisanych w ksi¹¿e “MySQL Bible” autora Steve Suehring:
+\begin{itemize}[leftmargin=1cm]
+	\item Mo¿liwoœæ tworzenia du¿ych rozmiarów tabeli mog¹cej przechowywaæ do 8 terabajtów danych.
+	\item Przynale¿noœæ do grupy oprogramowañ z otwartym kodem Ÿród³owym, co pozwala na bezproblemowe korzystanie i rozszerzanie kodu.
+	\item Niskie wymagania sprzêtowe umo¿liwiaj¹ce uruchomienie MySQL z aplikacjami posiadaj¹cymi tylko 32 megabajtów pamiêci RAM.
+	\item Czêsto wykorzystywany jako baza danych aplikacji webowej z powodu szybkoœci odczytywania i zapisywania danych.
+\end{itemize}
+\subsection{Jêzyk oprogramowania}
+\section{Inne u¿yte narzêdzia}
+
+
+%%%- JabRef - narzêdzie do przygotowywania bibliografii.
+%%%
+%%%
+%%%Uwaga: tytu³ powinien zmieœciæ siê w okienku kolorowej ok³adki (któr¹
+%%%powinna dostarczyæ uczelniana administracja). Proszê posterowaæ
+%%%parametrami, aby "wpasowaæ" w okienko w³asny tekst.
+%%%
+%%%Do ASAPa nale¿y wprowadziæ pracê dyplomow¹/projekt in¿ynierski w pliku o nazwie:
+%%%
+%%%W04_[nr albumu]_[rok kalendarzowy]_[rodzaj pracy] (szczegó³owa instrukcja pod adresem asap.pwr.edu.pl)
+%%%
+           %%%Przyk³adowo:
+        %%%­W04_123456_2015_praca in¿ynierska.pdf     - praca dyplomowa in¿ynierska
+        %%%W04_123456_2015_projekt in¿ynierski.pdf   - projekt in¿ynierski
+        %%%W04_123456_2015_praca magisterska.pdf  - praca dyplomowa magisterska
+%%%
+              %%%rok kalendarzowy ? rok realizacji kursu „Praca dyplomowa” (nie rok obrony) 
