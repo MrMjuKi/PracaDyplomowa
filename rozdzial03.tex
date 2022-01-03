@@ -1,0 +1,45 @@
+\chapter{Projekt aplikacji}
+Jednym z celów pracy jest stworzenie autorskiej aplikacji. Rozdzia³ drugi poœwiêcony jest jej projektu. Pos³u¿y³a ona za obiekt, na którym zosta³y wykonane testy penetracyjne, by w kolejnym kroku zaimplementowaæ rozwi¹zania neguj¹ce odnalezione podatnoœci. 
+\section{Opis aplikacji}
+Aplikacja nale¿y typu aplikacji internetowej (webowej). G³ównym jej zadaniem jest mo¿liwoœæ wystawienia og³oszeñ z produktem, którego w³aœciciel chce oddaæ lub sprzedaæ. Drugim równie wa¿nym jest mo¿liwoœæ przegl¹dnia og³oszeñ pozosta³ych u¿ytkowników. Posiada kilka powszechnych, porównuj¹c do innych aplikacji, funkcjonalnoœci. U¿ytkownik w celu skorzystania z niej musi stworzyæ w³asne konto. Przy ka¿dej wizycie na stronie wymagane jest zalogowanie siê za jego pomoc¹. Reszta funkcjonalnoœci dostêpna s¹ tylko po próbie logowania siê zakoñczon¹ sukcesem. Do ich grupy nale¿y: wyœwietlenie informacji o w³aœcicielu konta, dodawanie nowego og³oszenia, wyœwietlanie listy wszystkich wystawionych og³oszeñ oraz usuwanie dodanych przez siebie.
+\section{Wymagania aplikacji}
+Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsza z nich okreœla mo¿liwoœci zapewniane u¿ytkownikowi, je¿eli aplikacja prawid³owo dzia³a. Druga przedstawia wymagania stawiane i mo¿liwoœci wynikaj¹ce z jej budowy. 
+\subsection{Wymagania funkcjonalne}
+\begin{itemize}[leftmargin=1cm]
+	\item Dodanie nowego og³oszenia
+	\item Wyœwietlenie wszystkich og³oszeñ
+	\item Rejestracja nowego u¿tkownika
+	\item Logowania siê u¿ytkonika
+	\item Usuwanie og³oszenia
+	\item Wyœwietlanie informacji o koncie u¿ytkowanika
+\end{itemize}
+\subsection{Wymania niefunkcjonalne}
+
+\section{Projekt bazy danych}
+\subsection{Model konceptualny}
+%\newpage
+%\vfill
+\begin{figure}[h!]
+\centering
+\includegraphics[]{Rys01/UproszczonyModelKonceptualny.png}
+\caption{Uproszczony model konceptualny}
+\label{fig:Rys01/UproszczonyModelKonceptualny.png}
+\end{figure}
+%\vfill
+%\clearpage
+
+\subsection{Model logiczny}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Rys02/ModelLogiczny.png}
+\caption{Model logiczny}
+\label{fig:Rys02/ModelLogiczny.png}
+\end{figure}
+
+\subsection{Model fizyczny}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Rys03/ModelFizyczny.png}
+\caption{Model fizyczny}
+\label{fig:Rys03/ModelFizyczny.png}
+\end{figure}
