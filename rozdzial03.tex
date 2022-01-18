@@ -1,45 +1,272 @@
-\chapter{Projekt aplikacji}
-Jednym z celów pracy jest stworzenie autorskiej aplikacji. Rozdzia³ drugi poœwiêcony jest jej projektu. Pos³u¿y³a ona za obiekt, na którym zosta³y wykonane testy penetracyjne, by w kolejnym kroku zaimplementowaæ rozwi¹zania neguj¹ce odnalezione podatnoœci. 
+\chapter{Budowa aplikacji}
+Jednym z celów pracy jest stworzenie autorskiej aplikacji. Rozdzia³ drugi poœwiêcony jest jej projektowi. Pos³u¿y ona za obiekt, na którym zostan¹ wykonane testy bezpieczeñstwa. 
 \section{Opis aplikacji}
-Aplikacja nale¿y typu aplikacji internetowej (webowej). G³ównym jej zadaniem jest mo¿liwoœæ wystawienia og³oszeñ z produktem, którego w³aœciciel chce oddaæ lub sprzedaæ. Drugim równie wa¿nym jest mo¿liwoœæ przegl¹dnia og³oszeñ pozosta³ych u¿ytkowników. Posiada kilka powszechnych, porównuj¹c do innych aplikacji, funkcjonalnoœci. U¿ytkownik w celu skorzystania z niej musi stworzyæ w³asne konto. Przy ka¿dej wizycie na stronie wymagane jest zalogowanie siê za jego pomoc¹. Reszta funkcjonalnoœci dostêpna s¹ tylko po próbie logowania siê zakoñczon¹ sukcesem. Do ich grupy nale¿y: wyœwietlenie informacji o w³aœcicielu konta, dodawanie nowego og³oszenia, wyœwietlanie listy wszystkich wystawionych og³oszeñ oraz usuwanie dodanych przez siebie.
+Stworzona aplikacja nale¿y do typu aplikacji internetowej (webowej). G³ównym jej zadaniem jest mo¿liwoœæ wystawiania og³oszeñ z produktem, który chcemy oddaæ lub sprzedaæ. Drug¹ równie wa¿n¹ mo¿liwoœci¹ jest przegl¹dnie og³oszeñ pozosta³ych u¿ytkowników na g³ównej stronie.
+Osoba po stworzeniu konta i zalogowaniu siê na nie posiada kilka podstawowych funkcjonalnoœci, z których mo¿e skorzystaæ po pozytywnym przejœciu próby zalogowania siê. Do ich grupy nale¿y: wyœwietlenie informacji o w³aœcicielu konta, dodawanie nowego og³oszenia, wyœwietlanie listy wszystkich wystawionych og³oszeñ oraz wyœwietlanie i usuwanie dodanych og³oszeñ przez ich w³aœciciela.
+
 \section{Wymagania aplikacji}
-Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsza z nich okreœla mo¿liwoœci zapewniane u¿ytkownikowi, je¿eli aplikacja prawid³owo dzia³a. Druga przedstawia wymagania stawiane i mo¿liwoœci wynikaj¹ce z jej budowy. 
+Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsze z nich okreœlaj¹ mo¿liwoœci zapewniane u¿ytkownikowi, je¿eli aplikacja prawid³owo dzia³a. Drugie przedstawiaj¹ mo¿liwoœci wynikaj¹ce z jej budowy. Nastêpne podrozdzia³y wymieniaj¹ funkcjonalnoœci zawarte w projekcie.  
 \subsection{Wymagania funkcjonalne}
 \begin{itemize}[leftmargin=1cm]
+	\item Tworzenie nowego konta
+	\item Logowanie siê na konto
 	\item Dodanie nowego og³oszenia
-	\item Wyœwietlenie wszystkich og³oszeñ
-	\item Rejestracja nowego u¿tkownika
-	\item Logowania siê u¿ytkonika
-	\item Usuwanie og³oszenia
-	\item Wyœwietlanie informacji o koncie u¿ytkowanika
+	\item Wyœwietlenie og³oszeñ stworzonych przez u¿ytkownika
+	\item Usuwanie og³oszenia stworzonych przez u¿ytkownika
+	\item Wyœwietlanie presonalnych informacji
+	\item Wylogowanie siê z konta
 \end{itemize}
 \subsection{Wymania niefunkcjonalne}
+\begin{itemize}[leftmargin=1cm]
+	\item Wyœwietlenie wszystkich og³oszeñ
+\end{itemize}
 
 \section{Projekt bazy danych}
-\subsection{Model konceptualny}
-%\newpage
-%\vfill
+Do stworzenia bazy danych zastosowano trzy modele. Uproszczony model konceptualny, rozszerzony model konceptualny (inaczej model logiczny) oraz model fizyczny. Opieraj¹c siê na nich stworzono i wygenerowano bazê.
+\subsection{Uproszczony model konceptualny}
+Pierwszy z przedstawionych modeli pokazuje encje oraz relacje pomiêdzy nimi wsytêpuj¹ce. Baza danych opiera siê na tabeli \textit{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \textit{U¿ytkownik} oraz \textit{Personalne dane} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \textit{Personalne dane} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \textit{U¿ytkownik} i \textit{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne. Ze zwi¹zków pomiêdzy encjami przedstawionymi na rysunku~\ref{fig:Rys01/UproszczonyModelKonceptualny.png} mo¿na wywnioskowaæ, ¿e:
+\begin{itemize}[leftmargin=1cm]
+	\item \textit{U¿ytkownik} dodaje zero lub wiele \textit{Ofert}
+	\item \textit{Oferta} utworzony jest tylko i wy³¹cznie przez jednego \textit{U¿ytkownika}
+	\item \textit{U¿ytkownik} jest identyfikowany wy³¹cznie przez tylko jedne \textit{Personalne dane}
+	\item \textit{Personalne dane} okreœlaj¹ zero lub jednego \textit{U¿ytkownika}
+\end{itemize}
+
 \begin{figure}[h!]
 \centering
-\includegraphics[]{Rys01/UproszczonyModelKonceptualny.png}
+\includegraphics[scale=0.8]{Rys01/UproszczonyModelKonceptualny.png}
 \caption{Uproszczony model konceptualny}
 \label{fig:Rys01/UproszczonyModelKonceptualny.png}
 \end{figure}
-%\vfill
-%\clearpage
 
-\subsection{Model logiczny}
+\subsection{Rozszerzony model konceptualny}
+Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wersjê (patrz na rysunek~\ref{fig:Rys02/ModelLogiczny.png}). Tabele na wspomnianym rysunku posiadaj¹ dwie kolumny. W lewej wypisywane s¹ klucze. W prawej znajduj¹ siê nazwy indeksów. Encje \textit{U¿ytkownik} i \textit{Oferta} posiadaj¹ klucze g³ówne (Primary key). Nazwano je kolejno 'ID\_u¿ytkownika' oraz 'ID\_oferty'. Ponad to encja \textit{Oferta} dziedziczy g³ówny klucz encji \textit{U¿ytkownik} jako klucz obcy (Foreign key). Encja \textit{Personalne dane} nie posiada w³asnego klucza g³ównego, poniewa¿ dziedziczy go od encji \textit{U¿ytkownik} w postaci klucza obcego. Pod kluczami wypisano wszystkie indeksy jakie nale¿¹ do poszczególnych encji.
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{Rys02/ModelLogiczny.png}
-\caption{Model logiczny}
+\includegraphics[scale=0.7]{Rys02/ModelLogiczny.png}
+\caption{Rozszerzony model konceptualny}
 \label{fig:Rys02/ModelLogiczny.png}
 \end{figure}
 
+\newpage
+%\vfill
 \subsection{Model fizyczny}
-\begin{figure}[h!]
+Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny (patrz na rysunek~\ref{fig:Rys03/ModelFizyczny.png}). Encje posiadaj¹ po dwie kolumny. Lewa zawiera nazwy indeksów, oznaczenia kluczy g³ównych, obcych oraz licznik okreœlaj¹cy ³¹czn¹ iloœæ kluczy w encji. W prawej kolumnie okreœlono cechy poszczególnych indeksów. Znaczenia u¿ytych skrótów wypisano poni¿ej: 
+\begin{itemize}[leftmargin=1cm]
+	\item NOT NULL -- indeks nigdy nie mo¿e przyj¹æ, przechowywaæ wartoœci NULL
+	\item AUTO INCREMENTAL -- wartoœæ indeksu przy ka¿dorazowym wpisie do encji jest uzupe³niana automatycznie przez rosn¹ce liczby ca³kowite
+	\item UNIQUE -- indeks musi posiadaæ inn¹ wartoœæ dla ka¿dego wpisu w encji
+	\item Pozosta³e skróty okreœlaj¹ typy zmiennych jakie indeksy mog¹ przyj¹æ:
+	\begin{itemize}
+		\item int -- pozwala przyjmowaæ liczbê ca³kowit¹ z przedzia³u <$2^{-31}-1$;    $2^{31}-1$> 
+		\item double -- pozwala przyjmowaæ liczbê dziesiêtn¹
+		\item varchar[x] -- pozwala przyjmowaæ ci¹g znaków o maksymalnej d³ugoœci x. W przypadku napisania krótszego ci¹gu znaków nie wype³nia brakuj¹cych znaków spacjami
+		\item text -- pozwala przyjmowaæ d³ugi ci¹g znaków, który mieœci do $2^{31}-1$ znaków
+	\end{itemize} 
+\end{itemize}
+\begin{figure}
 \centering
-\includegraphics[scale=0.5]{Rys03/ModelFizyczny.png}
+\includegraphics[scale=0.54]{Rys03/ModelFizyczny.png}
 \caption{Model fizyczny}
 \label{fig:Rys03/ModelFizyczny.png}
 \end{figure}
+
+\newpage
+\subsection{Generowanie bazy danych}
+Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (Enhanced entity-relationship), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (patrz rysunek~\ref{fig:Rys04/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (patrz na rysunek~\ref{fig:Rys04/Success.png}).
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{Rys04/EERDiagram.png}
+\caption{Diagram EER utworzony w MySQL Workbench}
+\label{fig:Rys04/Success.png}
+\end{figure}
+\newpage
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.34]{Rys04/Success.png}
+\caption{Pozytywnie zakoñczone tworzenie bazy w MySQL Workbench}
+\label{fig:Rys04/EERDiagram.png}
+\end{figure}
+
+\section{Projekt aplikacji}
+\subsection{U¿yte narzêdzia i bilbioteki}
+Aplikacjê zaprojektowano przy u¿yciu narzêdzia Visual Studio Community 2022 oraz napisano za pomoc¹ jêzyka programowania Python. Poni¿ej przedstawino biblioteki, klasy, funkcje itp. u¿ywane przez program (patrz na listing~\ref{lst:Python biblioteki}). Do budowy aplikacji webowej zdecydowano siê u¿yæ frameworka Flask. Wykorzystano tak¿e przy pisaniu kolejncyh czêœci kodu. Ponadto u¿yto biblioteki flask\_mysqldb., która zapewnia po³¹czenie miêdzy Flask, a MySQL. Klasa MySQLdb.cursors pozwala wykonywaæ i zapisywaæ wynik zapytania SQL w zmiennej typu s³ownik.
+\begin{lstlisting}[language=Python, caption=Wykorzystane biblioteki w projekcie aplikacji, label={lst:Python biblioteki}]
+from flask import Flask, render_template, request, session
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
+\end{lstlisting}
+
+\subsection{Podstawa programu}
+Ka¿dorazowo przy uruchamianiu aplikacji wykonywany jest poni¿szy kod (patrz na listing~\ref{lst:Podstawa programu}). Buduje on strukturê programu, aby w kolejnym kroku uruchomiæ go pod adresem localhost i na porcie o numerze 4449.
+\newpage
+\begin{lstlisting}[language=Python, caption=Podstawowy kod uruchamiany przy w³¹czeniu aplikacji, 
+label={lst:Podstawa programu}]
+#tutaj zadeklarowane s¹ biblioteki#
+
+app = Flask(__name__)
+
+#tutaj siê mieœci reszta kodu aplikacji#
+
+if __name__ == '__main__':
+    app.run('localhost', 4449)
+\end{lstlisting}
+
+
+\subsection{Utworzenie po³¹czenia z baz¹ danych}
+Chc¹ wykorzystaæ stworzn¹ bazê danych uworzono z ni¹ po³¹czenie (patrz na listing~\ref{lst:Konfiguracja polaczenia bazy danych i aplikacji}).
+\begin{lstlisting}[language=Python, caption=Konfiguracja po³¹czenia bazy danych i aplikacji, label={lst:Konfiguracja polaczenia bazy danych i aplikacji}]
+app.secret_key = 'klucz'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'admin'
+app.config['MYSQL_DB'] = 'daza_danych_ofert'
+\end{lstlisting}
+
+\subsection{Implementacja funkcjonalnoœci}
+\subsubsection{Tworzenie nowego konta}
+Na pocz¹tku sprawdzane jest, czy u¿ytkownik nie jest ju¿ zalogowany. Je¿eli jest, to wyœwietla siê  strona domowa z informuj¹cym komunikatem. W przeciwnym przypadku ³aduje siê podstrona rejestracji z szablonem do wype³anienia. Po uzupe³nieniu pól i zatweirdzeniu danych przyciskiem tworzone s¹ nowe wpisy w encji \textit{U¿ytkownika} oraz \textit{Personalne dane} (patrz na listing~\ref{lst:rejestracja}).
+\begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstronê /rejestracja, label={lst:rejestracja}]
+@app.route('/rejestracja', methods=['GET', 'POST'])
+def rejestracja():
+    if session:
+        return render_template('index.html',listaOfert=listaOfert('ANY'), msg ='Jestes juz zalogowany jako ' + str(session['username']))
+
+    if request.method == 'POST':
+        uzytkownik = request.form.get('inputUzytkownik')
+        email = request.form.get('inputEmail')
+        haslo = request.form.get('inputHaslo')
+
+        tworzenieKonta = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        tworzenieKonta.execute('BEGIN; INSERT INTO uzytkownik (login, haslo, emial) VALUES ( % s, % s, % s); INSERT INTO personalne_dane (ID_uzytkownika) VALUES (last_insert_id()); COMMIT;', (uzytkownik, haslo, email ))
+        #mysql.connection.commit
+        
+        return render_template('index.html',listaOfert=listaOfert('ANY') ,msg ='Rejestracja przebiegla pomyslnie. Teraz mozesz sie zalogowac')
+
+    return render_template('rejestracja.html')
+\end{lstlisting}
+
+\subsubsection{Logowanie siê na konto}
+Funkcja zaczyna siê od potwierdzenia, czy u¿ytkownik jest zalogowany na konto. Je¿eli jest, to wyœwietla siê  strona domowa z odpowiednim komunikatem. W przeciwnym razie ³aduje siê podstrona umo¿liwiaj¹ca zalogowanie siê. Po naciœniêciu przycisku ``Zaloguj siê`` wykonuje siê kwerenda SQL sprawdzaj¹ca, czy konto o podanym loginie i haœle istnieje w bazie. Jeœli znajduje to tworzy siê nowa sesja. Przechowuje ona dwie wrtoœci login i ID u¿ytkownika. W przeciwnym wypadku ³adowana jest strona domowa z komunikatem o nieudanej próbie logowania (patrz na listing~\ref{lst:logowanie}).   
+\begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstronê /logowanie, label={lst:logowanie}]
+@app.route('/logowanie', methods=['GET', 'POST'])
+def logowanie():
+    if session:
+        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Jestes juz zalogowany jako ' + str(session['username']))
+
+    if request.method == 'POST':
+        uzytkownik = request.form.get('inputUzytkownik')
+        haslo = request.form.get('inputHaslo')
+
+        probaLogowania = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        probaLogowania.execute('SELECT * FROM uzytkownik WHERE login = % s AND haslo = % s', (uzytkownik, haslo ))
+
+        konto = probaLogowania.fetchone()
+        if konto:
+            session['id'] = konto['ID_uzytkownika']
+            session['username'] = konto['login']
+            return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Udalo sie zalogowac. Witaj ' + session['username'])
+        else:
+            return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Nie udalo sie zalogowac. Wpisales zle haslo lub login.')
+
+    return render_template('logowanie.html')
+\end{lstlisting}
+
+\subsubsection{Dodanie nowej oferty}
+Najpierw funkcja upewnia siê, czy u¿ytkownik jest zalogowany. Je¿eli jest, to ³adowana jest podstrona pozwalaj¹ca dodaæ now¹ ofertê. W innym przypadku aplikacja wraca do strony g³ównej i wyœwietla odpowiedni komunikat. Po wype³nieniu pól i zatwierdzeniu przyciskiem tworzony jest nowy wpis w encji \textit{Oferta} na podstawie wprowadzonych danych i informacji o sesji (patrz na listing~\ref{lst:dodajOferte}).
+\begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /dodajOferte, label={lst:dodajOferte}]
+@app.route('/dodajOferte', methods=['GET', 'POST'])
+def dodawanieOferty():
+    if not session:
+        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie lub utworz konto, by dodac oferte')
+
+    if request.method == 'POST':
+        nazwaProduktu = request.form.get('inputNameOfProduct')
+        opis = request.form.get('inputDescription')
+        ilosc = request.form.get('inputAmount')
+        cena = request.form.get('inputPrice')
+
+        dodanieOferty = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        dodanieOferty.execute('INSERT INTO oferta (ID_uzytkownika, nazwa_produktu, opis, ilosc_szt, cena) VALUES ( % s, % s, % s, % s, % s)', (session['id'], nazwaProduktu, opis, ilosc, cena ))
+
+        mysql.connection.commit()
+
+        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Pomyslnie dodano produkt')
+
+    return render_template('/dodawanieoferty.html')
+\end{lstlisting}
+
+\subsubsection{Wyœwietlanie i usuwanie ofert stworzonych przez u¿ytkownika}
+W piwerwszej kolejnoœci funkcja sprawdza czy u¿ytkownika jest zalogowany. Je¿eli jest, to wyœwietla siê podstrona ze wszystkimi ofertami, znalezionymi w bazie danych, które nale¿¹ do u¿ytkownika. W przeciwnym razie ³aduje siê strona domowa z dopasowanym komunikatem. Ka¿da oferta posiada przycisk ``Usuñ``. Za jego pomoc¹ mo¿na zliklidowaæ dan¹ ofertê z bazy danych. Po jego naciœniêciu kwerenda usuwa ofertê z encji \textit{Oferta}, przechodzi na stronê domow¹ i wyœwietla adekwatn¹ informacjê (patrz na listing~\ref{lst:mojeOferty}).
+\begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /mojeOferty, label={lst:mojeOferty}]
+@app.route('/mojeOferty', methods=['GET', 'POST'])
+def mojeoferty():
+    if not session:
+        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie, by zobaczyc swoje oferty')    
+    
+    if request.method == 'POST':
+        usunOferte = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        usunOferte.execute('DELETE FROM oferta WHERE ID_oferty = % s', (str(request.form.get('usun'))))
+
+        mysql.connection.commit()
+        return render_template('index.html' ,msg= 'Oferta zostala usunieta' ,listaOfert=listaOfert('ANY'))
+
+    return render_template('mojeOferty.html' ,listaOfert=listaOfert(session['id']))
+\end{lstlisting}
+
+\subsubsection{Wyœwietlanie i edytowanie personalnych danych u¿ytkownika}
+Na pocz¹tku sprawdza czy sesja u¿ytkownika jest aktywa. Je¿eli jest, to ³aduje podstronê z personalnymi danymi nale¿¹cymi do u¿ytkownika. Ponadto istnieje mo¿liwoœæ ich uaktualnienia. Po wpisaniu nowego imienia, nazwiska oraz numeru telefonu i zatwierdzenia przyciskiem ``Zapisz`` wykonuje siê kwerenda aktualizuj¹ca wpis w encji \textit{Personalne dane}. Po jej pomyœlnym zakoñczeniu wyœwietla siê strona g³ówna (patrz na listing~\ref{lst:mojeDane}).		
+\begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /mojeDane, label={lst:mojeDane}]
+@app.route('/mojeDane', methods=['GET', 'POST'])
+def mojeDane():
+    if not session:
+        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie, by zobaczyc swoje dane')
+
+    if request.method == 'POST':
+        imie = request.form.get('inputName')
+        nazwisko = request.form.get('inputSurname')
+        telefon = request.form.get('inputNumber')
+
+        aktualizacjaDanych = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        aktualizacjaDanych.execute('UPDATE personalne_dane SET imie = % s, nazwisko = % s, nr_telefonu = % s WHERE ID_uzytkownika = % s', (imie, nazwisko, telefon, str(session['id']) ))
+
+        mysql.connection.commit()
+
+        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zmiany zapisano')
+
+
+    mojeDane = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    mojeDane.execute('SELECT imie, nazwisko, nr_telefonu FROM personalne_dane WHERE ID_uzytkownika = % s', (str(session['id'])))
+    mysql.connection.commit()
+    mojeDane.close()
+    
+
+    return render_template('mojeDane.html', mojeDane=mojeDane)
+\end{lstlisting}
+
+\subsubsection{Wylogowanie siê z konta}
+W pierwszej kolejnoœci funkcja sprawdza, czy nie ma aktywnej sesji. Je¿eli nie ma to u¿ytkownik wraca na stronê g³ówna z odpowiednik komunikatem. W przeciwnym wypadku usuwa istniej¹c¹ sesjê i ³aduje stronê g³ówn¹ z komunikatem o pomyœlnym wylogowaniu siê (patrz na listing~\ref{lst:wyloguj}).
+\begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /wyloguj, label={lst:wyloguj}]
+@app.route('/wyloguj')
+def wyloguj():
+    if not session:
+        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Nie jestes zalogowany na zadne konto')
+
+    session.pop('id', None)
+    session.pop('username', None)
+
+    return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Wylogowanie przegieblo pomyslnie')
+\end{lstlisting}
+
+\subsubsection{Wyœwietlanie wszystkich ofert}
+Funkcja ka¿dorazowo wykonuje siê po uruchomieniu programu. Odpowiada ona za ³adowanie siê strony g³ównej oraz wyœwietlanie wszystkich wpisów z encji \textit{Oferta}, je¿eli istnieje aktywna sesja u¿ytkownika (patrz na listing~\ref{lst:home}).
+\begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na strone g³ówn¹ lub po za³adowaniu podstawy programu, label={lst:home}]
+@app.route('/')
+@app.route('/home')
+def index():
+    if session:
+        return render_template('index.html', listaOfert=listaOfert('ANY'))
+
+    return render_template('index.html', msg="Zaloguj sie w celu przegladania ofert")
+\end{lstlisting}
