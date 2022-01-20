@@ -16,80 +16,73 @@ Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsze z nic
 	\item Wyœwietlanie presonalnych informacji
 	\item Wylogowanie siê z konta
 \end{itemize}
-\subsection{Wymania niefunkcjonalne}
+\subsection{Wymagania niefunkcjonalne}
 \begin{itemize}[leftmargin=1cm]
 	\item Wyœwietlenie wszystkich og³oszeñ
 \end{itemize}
 
 \section{Projekt bazy danych}
-Do stworzenia bazy danych zastosowano trzy modele. Uproszczony model konceptualny, rozszerzony model konceptualny (inaczej model logiczny) oraz model fizyczny. Opieraj¹c siê na nich stworzono i wygenerowano bazê.
+Do stworzenia bazy danych zastosowano trzy modele: uproszczony model konceptualny, rozszerzony model konceptualny (inaczej model logiczny) oraz model fizyczny. W celu unikniêcia nieœci³oœci obrano jeden standard modelowania. Przyjêto notacjê Crow's Feet, która jest pokrewna do IE/Relational. Opieraj¹c siê na nich stworzono i wygenerowano bazê.
 \subsection{Uproszczony model konceptualny}
-Pierwszy z przedstawionych modeli pokazuje encje oraz relacje pomiêdzy nimi wsytêpuj¹ce. Baza danych opiera siê na tabeli \textit{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \textit{U¿ytkownik} oraz \textit{Personalne dane} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \textit{Personalne dane} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \textit{U¿ytkownik} i \textit{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne. Ze zwi¹zków pomiêdzy encjami przedstawionymi na rysunku~\ref{fig:Rys01/UproszczonyModelKonceptualny.png} mo¿na wywnioskowaæ, ¿e:
-\begin{itemize}[leftmargin=1cm]
-	\item \textit{U¿ytkownik} dodaje zero lub wiele \textit{Ofert}
-	\item \textit{Oferta} utworzony jest tylko i wy³¹cznie przez jednego \textit{U¿ytkownika}
-	\item \textit{U¿ytkownik} jest identyfikowany wy³¹cznie przez tylko jedne \textit{Personalne dane}
-	\item \textit{Personalne dane} okreœlaj¹ zero lub jednego \textit{U¿ytkownika}
-\end{itemize}
-
+Pierwszy z przedstawionych modeli pokazuje encje oraz relacje pomiêdzy nimi wsytêpuj¹ce. Baza danych opiera siê na tabeli \textit{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \textit{U¿ytkownik} oraz \textit{Personalia} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \textit{Personalia} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \textit{U¿ytkownik} i \textit{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne.
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.8]{Rys01/UproszczonyModelKonceptualny.png}
+\includegraphics[scale=0.5]{Rys01/UproszczonyModelKonceptualny.png}
 \caption{Uproszczony model konceptualny}
 \label{fig:Rys01/UproszczonyModelKonceptualny.png}
 \end{figure}
 
 \subsection{Rozszerzony model konceptualny}
-Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wersjê (patrz na rysunek~\ref{fig:Rys02/ModelLogiczny.png}). Tabele na wspomnianym rysunku posiadaj¹ dwie kolumny. W lewej wypisywane s¹ klucze. W prawej znajduj¹ siê nazwy indeksów. Encje \textit{U¿ytkownik} i \textit{Oferta} posiadaj¹ klucze g³ówne (Primary key). Nazwano je kolejno 'ID\_u¿ytkownika' oraz 'ID\_oferty'. Ponad to encja \textit{Oferta} dziedziczy g³ówny klucz encji \textit{U¿ytkownik} jako klucz obcy (Foreign key). Encja \textit{Personalne dane} nie posiada w³asnego klucza g³ównego, poniewa¿ dziedziczy go od encji \textit{U¿ytkownik} w postaci klucza obcego. Pod kluczami wypisano wszystkie indeksy jakie nale¿¹ do poszczególnych encji.
+Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wersjê (patrz na rysunek~\ref{fig:Rys02/ModelLogiczny.png}). Tabele na wspomnianym rysunku posiadaj¹ dwie kolumny. W lewej wypisywane s¹ klucze. W prawej znajduj¹ siê nazwy indeksów. Ka¿da encja posiada klucz g³ówny (Primary key). Encje \textit{U¿ytkownik} i \textit{Oferta} posiadaj¹ kolejno klucze g³ówne o nazwie 'ID\textunderscore u¿ytkownika' oraz 'ID\textunderscore oferty'. Encja \textit{Pesonalia} dziedziczy klucz g³ówny od encji \textit{U¿ytkownik}, który jest zarazem kluczem obcym (Foreign key). Ponad to encja \textit{Oferta} dziedziczy g³ówny klucz encji \textit{U¿ytkownik} jako klucz obcy. Pod kluczami wypisano wszystkie indeksy jakie nale¿¹ do poszczególnych encji.
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.7]{Rys02/ModelLogiczny.png}
+\includegraphics[scale=0.5]{Rys02/ModelLogiczny.png}
 \caption{Rozszerzony model konceptualny}
 \label{fig:Rys02/ModelLogiczny.png}
 \end{figure}
 
-\newpage
+%\newpage
 %\vfill
 \subsection{Model fizyczny}
-Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny (patrz na rysunek~\ref{fig:Rys03/ModelFizyczny.png}). Encje posiadaj¹ po dwie kolumny. Lewa zawiera nazwy indeksów, oznaczenia kluczy g³ównych, obcych oraz licznik okreœlaj¹cy ³¹czn¹ iloœæ kluczy w encji. W prawej kolumnie okreœlono cechy poszczególnych indeksów. Znaczenia u¿ytych skrótów wypisano poni¿ej: 
+Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny (patrz na rysunek~\ref{fig:Rys03/ModelFizyczny.png}). Model ten, w przeciwieñstwie do wczeœniejszych, nie posida polskich znaków. Encje maj¹ po dwie kolumny: lewa zawiera nazwy indeksów, oznaczenia kluczy g³ównych i obcych, natomiast w prawej kolumnie okreœlono cechy poszczególnych indeksów. Znaczenia u¿ytych skrótów wypisano poni¿ej: 
 \begin{itemize}[leftmargin=1cm]
-	\item NOT NULL -- indeks nigdy nie mo¿e przyj¹æ, przechowywaæ wartoœci NULL
-	\item AUTO INCREMENTAL -- wartoœæ indeksu przy ka¿dorazowym wpisie do encji jest uzupe³niana automatycznie przez rosn¹ce liczby ca³kowite
-	\item UNIQUE -- indeks musi posiadaæ inn¹ wartoœæ dla ka¿dego wpisu w encji
+	\item NOT NULL - indeks nigdy nie mo¿e przyj¹æ, przechowywaæ wartoœci NULL
+	\item UNIQUE - indeks musi posiadaæ inn¹ wartoœæ dla ka¿dego wpisu w encji
 	\item Pozosta³e skróty okreœlaj¹ typy zmiennych jakie indeksy mog¹ przyj¹æ:
 	\begin{itemize}
-		\item int -- pozwala przyjmowaæ liczbê ca³kowit¹ z przedzia³u <$2^{-31}-1$;    $2^{31}-1$> 
-		\item double -- pozwala przyjmowaæ liczbê dziesiêtn¹
-		\item varchar[x] -- pozwala przyjmowaæ ci¹g znaków o maksymalnej d³ugoœci x. W przypadku napisania krótszego ci¹gu znaków nie wype³nia brakuj¹cych znaków spacjami
-		\item text -- pozwala przyjmowaæ d³ugi ci¹g znaków, który mieœci do $2^{31}-1$ znaków
+		\item int - pozwala przyjmowaæ liczbê ca³kowit¹ z przedzia³u <$2^{-31}-1$;    $2^{31}-1$> 
+		\item double - pozwala przyjmowaæ liczbê dziesiêtn¹
+		\item varchar[x] - pozwala przyjmowaæ ci¹g znaków o maksymalnej d³ugoœci x. W przypadku napisania krótszego ci¹gu znaków nie wype³nia brakuj¹cych znaków spacjami
+		\item text - pozwala przyjmowaæ d³ugi ci¹g znaków, który mieœci do $2^{31}-1$ znaków
 	\end{itemize} 
 \end{itemize}
-\begin{figure}
+\begin{figure}[h!]
 \centering
-\includegraphics[scale=0.54]{Rys03/ModelFizyczny.png}
+\includegraphics[scale=0.5]{Rys03/ModelFizyczny.png}
 \caption{Model fizyczny}
 \label{fig:Rys03/ModelFizyczny.png}
 \end{figure}
 
-\newpage
+%\newpage
 \subsection{Generowanie bazy danych}
-Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (Enhanced entity-relationship), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (patrz rysunek~\ref{fig:Rys04/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (patrz na rysunek~\ref{fig:Rys04/Success.png}).
+Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (Enhanced entity-relationship), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (patrz na rysunek~\ref{fig:Rys04/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (patrz na rysunek~\ref{fig:Rys04/Success.png}).
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.4]{Rys04/EERDiagram.png}
+\includegraphics[scale=0.6]{Rys04/EERDiagram.png}
 \caption{Diagram EER utworzony w MySQL Workbench}
-\label{fig:Rys04/Success.png}
-\end{figure}
-\newpage
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.34]{Rys04/Success.png}
-\caption{Pozytywnie zakoñczone tworzenie bazy w MySQL Workbench}
 \label{fig:Rys04/EERDiagram.png}
 \end{figure}
 
+%\newpage
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.2]{Rys04/Success.png}
+\caption{Pozytywnie zakoñczone tworzenie bazy w MySQL Workbench}
+\label{fig:Rys04/Success.png}
+\end{figure}
+
 \section{Projekt aplikacji}
-\subsection{U¿yte narzêdzia i bilbioteki}
+\subsection{U¿yte narzêdzia i biblioteki}
 Aplikacjê zaprojektowano przy u¿yciu narzêdzia Visual Studio Community 2022 oraz napisano za pomoc¹ jêzyka programowania Python. Poni¿ej przedstawino biblioteki, klasy, funkcje itp. u¿ywane przez program (patrz na listing~\ref{lst:Python biblioteki}). Do budowy aplikacji webowej zdecydowano siê u¿yæ frameworka Flask. Wykorzystano tak¿e przy pisaniu kolejncyh czêœci kodu. Ponadto u¿yto biblioteki flask\_mysqldb., która zapewnia po³¹czenie miêdzy Flask, a MySQL. Klasa MySQLdb.cursors pozwala wykonywaæ i zapisywaæ wynik zapytania SQL w zmiennej typu s³ownik.
 \begin{lstlisting}[language=Python, caption=Wykorzystane biblioteki w projekcie aplikacji, label={lst:Python biblioteki}]
 from flask import Flask, render_template, request, session
@@ -99,7 +92,7 @@ import MySQLdb.cursors
 
 \subsection{Podstawa programu}
 Ka¿dorazowo przy uruchamianiu aplikacji wykonywany jest poni¿szy kod (patrz na listing~\ref{lst:Podstawa programu}). Buduje on strukturê programu, aby w kolejnym kroku uruchomiæ go pod adresem localhost i na porcie o numerze 4449.
-\newpage
+%\newpage
 \begin{lstlisting}[language=Python, caption=Podstawowy kod uruchamiany przy w³¹czeniu aplikacji, 
 label={lst:Podstawa programu}]
 #tutaj zadeklarowane s¹ biblioteki#
@@ -125,7 +118,7 @@ app.config['MYSQL_DB'] = 'daza_danych_ofert'
 
 \subsection{Implementacja funkcjonalnoœci}
 \subsubsection{Tworzenie nowego konta}
-Na pocz¹tku sprawdzane jest, czy u¿ytkownik nie jest ju¿ zalogowany. Je¿eli jest, to wyœwietla siê  strona domowa z informuj¹cym komunikatem. W przeciwnym przypadku ³aduje siê podstrona rejestracji z szablonem do wype³anienia. Po uzupe³nieniu pól i zatweirdzeniu danych przyciskiem tworzone s¹ nowe wpisy w encji \textit{U¿ytkownika} oraz \textit{Personalne dane} (patrz na listing~\ref{lst:rejestracja}).
+Na pocz¹tku sprawdzane jest, czy u¿ytkownik nie jest ju¿ zalogowany. Je¿eli jest, to wyœwietla siê  strona domowa z informuj¹cym komunikatem. W przeciwnym przypadku ³aduje siê podstrona rejestracji z szablonem do wype³anienia. Po uzupe³nieniu pól i zatweirdzeniu danych przyciskiem tworzone s¹ nowe wpisy w encji \textit{U¿ytkownika} oraz \textit{Personalia} (patrz na listing~\ref{lst:rejestracja}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstronê /rejestracja, label={lst:rejestracja}]
 @app.route('/rejestracja', methods=['GET', 'POST'])
 def rejestracja():
@@ -138,7 +131,7 @@ def rejestracja():
         haslo = request.form.get('inputHaslo')
 
         tworzenieKonta = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        tworzenieKonta.execute('BEGIN; INSERT INTO uzytkownik (login, haslo, emial) VALUES ( % s, % s, % s); INSERT INTO personalne_dane (ID_uzytkownika) VALUES (last_insert_id()); COMMIT;', (uzytkownik, haslo, email ))
+        tworzenieKonta.execute('BEGIN; INSERT INTO uzytkownik (login, haslo) VALUES ( % s, % s); INSERT INTO personalia (ID_uzytkownika, `e-mail`) VALUES (last_insert_id(), % s); COMMIT;', (uzytkownik, haslo, email ))
         #mysql.connection.commit
         
         return render_template('index.html',listaOfert=listaOfert('ANY') ,msg ='Rejestracja przebiegla pomyslnie. Teraz mozesz sie zalogowac')
@@ -175,7 +168,6 @@ def logowanie():
 \subsubsection{Dodanie nowej oferty}
 Najpierw funkcja upewnia siê, czy u¿ytkownik jest zalogowany. Je¿eli jest, to ³adowana jest podstrona pozwalaj¹ca dodaæ now¹ ofertê. W innym przypadku aplikacja wraca do strony g³ównej i wyœwietla odpowiedni komunikat. Po wype³nieniu pól i zatwierdzeniu przyciskiem tworzony jest nowy wpis w encji \textit{Oferta} na podstawie wprowadzonych danych i informacji o sesji (patrz na listing~\ref{lst:dodajOferte}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /dodajOferte, label={lst:dodajOferte}]
-@app.route('/dodajOferte', methods=['GET', 'POST'])
 def dodawanieOferty():
     if not session:
         return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie lub utworz konto, by dodac oferte')
@@ -187,7 +179,7 @@ def dodawanieOferty():
         cena = request.form.get('inputPrice')
 
         dodanieOferty = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        dodanieOferty.execute('INSERT INTO oferta (ID_uzytkownika, nazwa_produktu, opis, ilosc_szt, cena) VALUES ( % s, % s, % s, % s, % s)', (session['id'], nazwaProduktu, opis, ilosc, cena ))
+        dodanieOferty.execute('INSERT INTO oferta (ID_uzytkownika, nazwa_produktu, opis, liczba_sztuk, cena) VALUES ( % s, % s, % s, % s, % s)', (session['id'], nazwaProduktu, opis, ilosc, cena ))
 
         mysql.connection.commit()
 
@@ -199,7 +191,6 @@ def dodawanieOferty():
 \subsubsection{Wyœwietlanie i usuwanie ofert stworzonych przez u¿ytkownika}
 W piwerwszej kolejnoœci funkcja sprawdza czy u¿ytkownika jest zalogowany. Je¿eli jest, to wyœwietla siê podstrona ze wszystkimi ofertami, znalezionymi w bazie danych, które nale¿¹ do u¿ytkownika. W przeciwnym razie ³aduje siê strona domowa z dopasowanym komunikatem. Ka¿da oferta posiada przycisk ``Usuñ``. Za jego pomoc¹ mo¿na zliklidowaæ dan¹ ofertê z bazy danych. Po jego naciœniêciu kwerenda usuwa ofertê z encji \textit{Oferta}, przechodzi na stronê domow¹ i wyœwietla adekwatn¹ informacjê (patrz na listing~\ref{lst:mojeOferty}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /mojeOferty, label={lst:mojeOferty}]
-@app.route('/mojeOferty', methods=['GET', 'POST'])
 def mojeoferty():
     if not session:
         return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie, by zobaczyc swoje oferty')    
@@ -215,7 +206,7 @@ def mojeoferty():
 \end{lstlisting}
 
 \subsubsection{Wyœwietlanie i edytowanie personalnych danych u¿ytkownika}
-Na pocz¹tku sprawdza czy sesja u¿ytkownika jest aktywa. Je¿eli jest, to ³aduje podstronê z personalnymi danymi nale¿¹cymi do u¿ytkownika. Ponadto istnieje mo¿liwoœæ ich uaktualnienia. Po wpisaniu nowego imienia, nazwiska oraz numeru telefonu i zatwierdzenia przyciskiem ``Zapisz`` wykonuje siê kwerenda aktualizuj¹ca wpis w encji \textit{Personalne dane}. Po jej pomyœlnym zakoñczeniu wyœwietla siê strona g³ówna (patrz na listing~\ref{lst:mojeDane}).		
+Na pocz¹tku sprawdza czy sesja u¿ytkownika jest aktywa. Je¿eli jest, to ³aduje podstronê z personalnymi danymi nale¿¹cymi do u¿ytkownika. Ponadto istnieje mo¿liwoœæ ich uaktualnienia. Po wpisaniu nowego imienia, nazwiska, numeru telefonu oraz adres e-mail i zatwierdzenia przyciskiem ``Zapisz`` wykonuje siê kwerenda aktualizuj¹ca wpis w encji \textit{Personalia}. Po jej pomyœlnym zakoñczeniu wyœwietla siê strona g³ówna (patrz na listing~\ref{lst:mojeDane}).		
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /mojeDane, label={lst:mojeDane}]
 @app.route('/mojeDane', methods=['GET', 'POST'])
 def mojeDane():
@@ -226,9 +217,12 @@ def mojeDane():
         imie = request.form.get('inputName')
         nazwisko = request.form.get('inputSurname')
         telefon = request.form.get('inputNumber')
+        if telefon == 'None':
+            telefon = 0
+        email = request.form.get('inputEmail')
 
         aktualizacjaDanych = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        aktualizacjaDanych.execute('UPDATE personalne_dane SET imie = % s, nazwisko = % s, nr_telefonu = % s WHERE ID_uzytkownika = % s', (imie, nazwisko, telefon, str(session['id']) ))
+        aktualizacjaDanych.execute('UPDATE personalia SET imie = % s, nazwisko = % s, nr_telefonu = % s, `e-mail` = % s WHERE ID_uzytkownika = % s', (imie, nazwisko, telefon, email, str(session['id']) ))
 
         mysql.connection.commit()
 
@@ -237,7 +231,7 @@ def mojeDane():
 
     mojeDane = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
-    mojeDane.execute('SELECT imie, nazwisko, nr_telefonu FROM personalne_dane WHERE ID_uzytkownika = % s', (str(session['id'])))
+    mojeDane.execute('SELECT imie, nazwisko, nr_telefonu, `e-mail` FROM personalia WHERE ID_uzytkownika = % s', (str(session['id'])))
     mysql.connection.commit()
     mojeDane.close()
     
@@ -262,6 +256,18 @@ def wyloguj():
 \subsubsection{Wyœwietlanie wszystkich ofert}
 Funkcja ka¿dorazowo wykonuje siê po uruchomieniu programu. Odpowiada ona za ³adowanie siê strony g³ównej oraz wyœwietlanie wszystkich wpisów z encji \textit{Oferta}, je¿eli istnieje aktywna sesja u¿ytkownika (patrz na listing~\ref{lst:home}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na strone g³ówn¹ lub po za³adowaniu podstawy programu, label={lst:home}]
+def listaOfert(IDuzytkownika):
+    listaOfert = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if IDuzytkownika != 'ANY':
+        listaOfert.execute('SELECT uzytkownik.login, oferta.nazwa_produktu, oferta.opis, oferta.liczba_sztuk, oferta.cena, oferta.ID_oferty FROM oferta INNER JOIN uzytkownik ON oferta.ID_uzytkownika=uzytkownik.ID_uzytkownika WHERE oferta.ID_uzytkownika = % s', (str(IDuzytkownika)))
+    else:
+        listaOfert.execute('SELECT uzytkownik.login, oferta.nazwa_produktu, oferta.opis, oferta.liczba_sztuk, oferta.cena FROM oferta INNER JOIN uzytkownik ON oferta.ID_uzytkownika=uzytkownik.ID_uzytkownika')
+
+    mysql.connection.commit()
+    listaOfert.close()
+    
+    return listaOfert
+
 @app.route('/')
 @app.route('/home')
 def index():
