@@ -13,72 +13,82 @@ Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsze z nic
 	\item Dodanie nowego og³oszenia
 	\item Wyœwietlenie og³oszeñ stworzonych przez u¿ytkownika
 	\item Usuwanie og³oszenia stworzonych przez u¿ytkownika
-	\item Wyœwietlanie presonalnych informacji
+	\item Wyœwietlanie personalnych informacji
 	\item Wylogowanie siê z konta
 \end{itemize}
 \subsection{Wymagania niefunkcjonalne}
+% TODO: Proszê doczytaæ, czym s¹ wymagania niefunkcjonalne!!!!
+%%      To, co Pan napisa³, jest niepoprawne !!!!!!
 \begin{itemize}[leftmargin=1cm]
 	\item Wyœwietlenie wszystkich og³oszeñ
 \end{itemize}
 
 \section{Projekt bazy danych}
-Do stworzenia bazy danych zastosowano trzy modele: uproszczony model konceptualny, rozszerzony model konceptualny (inaczej model logiczny) oraz model fizyczny. W celu unikniêcia nieœci³oœci obrano jeden standard modelowania. Przyjêto notacjê Crow's Feet, która jest pokrewna do IE/Relational. Opieraj¹c siê na nich stworzono i wygenerowano bazê.
+Podczas projektowania schematu bazy danych stworzono kolejno trzy modele: uproszczony model konceptualny, rozszerzony model konceptualny (inaczej model logiczny) oraz model fizyczny. Opieraj¹c siê na nich stworzono i wygenerowano bazê danych u¿yt¹ podczas implementacji aplikacji.
+
+Modelowanie schematów baz danych mo¿e odbywaæ siê z wykorzystaniem ró¿nych notacji. W niniejszej pracy pos³u¿ono siê elementami notacji ,,kurzej ³apki'' (ang.~\emph{Crow's Foot Notation}). Elementy tej notacji pojawiaj¹ siê w ró¿nych standardach modelowania, np. w Notacji In¿ynierii Informacyjnej/Relacyjnej (ang.~\emph{Information Engineering/Relational Notation}, IE/Relational Notation) czy te¿ w Notacji Bakera (ang.~\emph{Barker's Notation}).
+% TO DO: tutaj móg³by Pan wstawiæ jak¹œ referencjê do Ÿród³a/ksi¹¿ki/artyku³u, w którym opisano te notacje
+
 \subsection{Uproszczony model konceptualny}
-Pierwszy z przedstawionych modeli pokazuje encje oraz relacje pomiêdzy nimi wsytêpuj¹ce. Baza danych opiera siê na tabeli \textit{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \textit{U¿ytkownik} oraz \textit{Personalia} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \textit{Personalia} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \textit{U¿ytkownik} i \textit{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne.
-\begin{figure}[h!]
+Pierwszy z przedstawionych modeli pokazuje encje oraz wystêpuj¹ce pomiêdzy nimi relacje (rys.~\ref{fig:Rys03/UproszczonyModelKonceptualny}). Schemat bazy danych opiera siê na tabeli \textit{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \textit{U¿ytkownik} oraz \textit{Personalia} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \textit{Personalia} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \textit{U¿ytkownik} i \textit{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne.
+\begin{figure}[htb]
 \centering
-\includegraphics[scale=0.5]{Rys01/UproszczonyModelKonceptualny.png}
+\includegraphics[scale=1.4]{Rys03/UproszczonyModelKonceptualny}
 \caption{Uproszczony model konceptualny}
-\label{fig:Rys01/UproszczonyModelKonceptualny.png}
+\label{fig:Rys03/UproszczonyModelKonceptualny}
 \end{figure}
 
 \subsection{Rozszerzony model konceptualny}
-Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wersjê (patrz na rysunek~\ref{fig:Rys02/ModelLogiczny.png}). Tabele na wspomnianym rysunku posiadaj¹ dwie kolumny. W lewej wypisywane s¹ klucze. W prawej znajduj¹ siê nazwy indeksów. Ka¿da encja posiada klucz g³ówny (Primary key). Encje \textit{U¿ytkownik} i \textit{Oferta} posiadaj¹ kolejno klucze g³ówne o nazwie 'ID\textunderscore u¿ytkownika' oraz 'ID\textunderscore oferty'. Encja \textit{Pesonalia} dziedziczy klucz g³ówny od encji \textit{U¿ytkownik}, który jest zarazem kluczem obcym (Foreign key). Ponad to encja \textit{Oferta} dziedziczy g³ówny klucz encji \textit{U¿ytkownik} jako klucz obcy. Pod kluczami wypisano wszystkie indeksy jakie nale¿¹ do poszczególnych encji.
-\begin{figure}[h!]
+Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wersjê jak na rysunku~\ref{fig:Rys03/ModelLogiczny}. Tabele w tym modelu posiadaj¹ dwie kolumny: w lewej wpisywane s¹ oznaczenia kluczy (jeœli dany atrybut jest kluczem), w prawej zaœ nazwy atrybutów. Ka¿da encja posiada klucz g³ówny (ang.~\emph{primary key}, PK). Encje \texttt{U¿ytkownik} i \texttt{Oferta} posiadaj¹ kolejno klucze g³ówne o nazwie \texttt{ID\_u¿ytkownika} oraz \texyyy{ID\_oferty}. Encja \texttt{Pesonalia} dziedziczy klucz g³ówny od encji \texttt{U¿ytkownik}, który jest zarazem kluczem obcym (ang.~\emph{foreign key}, FK). Ponadto encja \texttt{Oferta} dziedziczy g³ówny klucz encji \textit{U¿ytkownik} jako klucz obcy. Pod kluczami wypisano wszystkie indeksy jakie nale¿¹ do poszczególnych encji.
+\begin{figure}[ht]
 \centering
-\includegraphics[scale=0.5]{Rys02/ModelLogiczny.png}
+\includegraphics[scale=1.4]{Rys03/ModelLogiczny}
 \caption{Rozszerzony model konceptualny}
-\label{fig:Rys02/ModelLogiczny.png}
+\label{fig:Rys03/ModelLogiczny}
 \end{figure}
 
 %\newpage
 %\vfill
 \subsection{Model fizyczny}
-Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny (patrz na rysunek~\ref{fig:Rys03/ModelFizyczny.png}). Model ten, w przeciwieñstwie do wczeœniejszych, nie posida polskich znaków. Encje maj¹ po dwie kolumny: lewa zawiera nazwy indeksów, oznaczenia kluczy g³ównych i obcych, natomiast w prawej kolumnie okreœlono cechy poszczególnych indeksów. Znaczenia u¿ytych skrótów wypisano poni¿ej: 
+Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny jak na rysunku~\ref{fig:Rys03/ModelFizyczny}). Podczas nazywania elementów tego modelu zrezygnowano z u¿ywania polskich znaków diakrytycznych. Encje maj¹ po dwie kolumny: lewa zawiera nazwy indeksów, oznaczenia kluczy g³ównych i obcych, natomiast w prawej kolumnie okreœlono cechy poszczególnych indeksów. Znaczenia u¿ytych skrótów wyjaœniono poni¿ej.
 \begin{itemize}[leftmargin=1cm]
-	\item NOT NULL - indeks nigdy nie mo¿e przyj¹æ, przechowywaæ wartoœci NULL
-	\item UNIQUE - indeks musi posiadaæ inn¹ wartoœæ dla ka¿dego wpisu w encji
-	\item Pozosta³e skróty okreœlaj¹ typy zmiennych jakie indeksy mog¹ przyj¹æ:
+\item ograniczenia:
+\begin{itemize}
+	\item \texttt{NOT NULL} -- indeks nigdy nie mo¿e przyj¹æ, przechowywaæ wartoœci \texttt{NULL},
+	\item \texttt{UNIQUE} -- indeks musi posiadaæ inn¹ wartoœæ dla ka¿dego wpisu w encji,
+\end{itemize}
+\item typy danych:
 	\begin{itemize}
-		\item int - pozwala przyjmowaæ liczbê ca³kowit¹ z przedzia³u <$2^{-31}-1$;    $2^{31}-1$> 
-		\item double - pozwala przyjmowaæ liczbê dziesiêtn¹
-		\item varchar[x] - pozwala przyjmowaæ ci¹g znaków o maksymalnej d³ugoœci x. W przypadku napisania krótszego ci¹gu znaków nie wype³nia brakuj¹cych znaków spacjami
-		\item text - pozwala przyjmowaæ d³ugi ci¹g znaków, który mieœci do $2^{31}-1$ znaków
+		\item \texttt{int} -- wartoœæ mo¿e byæ liczb¹ ca³kowit¹ z przedzia³u <$2^{-31}-1$;    $2^{31}-1$> 
+		\item \texttt{double} -- wartoœæ mo¿e byæ liczb¹ dziesiêtn¹
+		\item \texttt{varchar[x]} -- wartoœæ mo¿e byæ ci¹giem znaków o maksymalnej d³ugoœci \texttt{x}. W przypadku napisania krótszego ci¹gu znaków nie wype³nia brakuj¹cych znaków spacjami,
+		\item \texttt{text} -- wartoœæ mo¿e byæ d³ugim ci¹giem znaków, zawieraj¹cym do $2^{31}-1$ znaków.
 	\end{itemize} 
 \end{itemize}
-\begin{figure}[h!]
+
+\begin{figure}[htb]
 \centering
-\includegraphics[scale=0.5]{Rys03/ModelFizyczny.png}
+\includegraphics[scale=1.4]{Rys03/ModelFizyczny}
 \caption{Model fizyczny}
-\label{fig:Rys03/ModelFizyczny.png}
+\label{fig:Rys03/ModelFizyczny}
 \end{figure}
 
 %\newpage
 \subsection{Generowanie bazy danych}
-Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (Enhanced entity-relationship), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (patrz na rysunek~\ref{fig:Rys04/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (patrz na rysunek~\ref{fig:Rys04/Success.png}).
+Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (ang.~\emph{Enhanced entity-relationship}), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (patrz na rysunek~\ref{fig:Rys03/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (patrz na rysunek~\ref{fig:Rys03/Success.png}).
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.6]{Rys04/EERDiagram.png}
+\includegraphics[scale=0.8]{Rys03/EERDiagram.png}
 \caption{Diagram EER utworzony w MySQL Workbench}
-\label{fig:Rys04/EERDiagram.png}
+\label{fig:Rys03/EERDiagram.png}
 \end{figure}
 
 %\newpage
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.2]{Rys04/Success.png}
+\includegraphics[scale=0.2]{Rys03/Success.png}
 \caption{Pozytywnie zakoñczone tworzenie bazy w MySQL Workbench}
-\label{fig:Rys04/Success.png}
+\label{fig:Rys03/Success.png}
 \end{figure}
 
 \section{Projekt aplikacji}
