@@ -5,7 +5,7 @@ Stworzona aplikacja nale¿y do typu aplikacji internetowej (webowej). G³ównym jej
 Osoba po stworzeniu konta i zalogowaniu siê na nie posiada kilka podstawowych funkcjonalnoœci, z których mo¿e skorzystaæ po pozytywnym przejœciu próby zalogowania siê. Do ich grupy nale¿y: wyœwietlenie informacji o w³aœcicielu konta, dodawanie nowego og³oszenia, wyœwietlanie listy wszystkich wystawionych og³oszeñ oraz wyœwietlanie i usuwanie dodanych og³oszeñ przez ich w³aœciciela.
 
 \section{Wymagania aplikacji}
-Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsze z nich okreœlaj¹ mo¿liwoœci zapewniane u¿ytkownikowi, je¿eli aplikacja prawid³owo dzia³a. Drugie przedstawiaj¹ mo¿liwoœci wynikaj¹ce z jej budowy. Definiuj¹ one funkcje zwi¹zane z bezpieczeñstwem, wydajnoœci¹ i wygod¹ korzystania z aplikacji. Nastêpne podrozdzia³y wymieniaj¹ funkcjonalnoœci zawarte w projekcie.  
+Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsze z nich okreœlaj¹ mo¿liwoœci zapewniane u¿ytkownikowi, je¿eli aplikacja prawid³owo dzia³a. Drugie przedstawiaj¹ mo¿liwoœci wynikaj¹ce oraz na³o¿one ograniczenia w celu zwiêkszenia wydajnoœci aplikacji. Mog¹ definiowaæ funkcje zwi¹zane z bezpieczeñstwem, wydajnoœci¹ lub wygod¹ korzystania z aplikacji. Nastêpne podrozdzia³y wymieniaj¹ funkcjonalnoœci zawarte w projekcie.  
 \subsection{Wymagania funkcjonalne}
 \begin{itemize}[leftmargin=1cm]
 	\item Tworzenie nowego konta
@@ -21,9 +21,15 @@ Wymagania aplikacji dziel¹ siê na funkcjonalne i niefunkcjonalne. Pierwsze z nic
 % TODO: Proszê doczytaæ, czym s¹ wymagania niefunkcjonalne!!!!
 %%      To, co Pan napisa³, jest niepoprawne !!!!!!
 \begin{itemize}[leftmargin=1cm]
-	\item Mo¿liwoœæ korzystania z funkcji aplikacji po ówczesnym zalogowaniu siê za wyj¹tkiem tworzenia konta
-	\item Na jednym urz¹dzeniu mo¿e byæ zalogowany jeden u¿ytkownik
-	\item Personalne informajce widoczne tylko dla ich w³aœciciel
+	\item £¹czenie siê z baz¹ danych
+	\item Pobieranie informacji z bazy danych
+	\item Modyfikowanie informacji zamieszczonych w bazie danych
+	\item Dodawanie nowych informacji do bazy danych
+	\item Przechowywanie informacji o sesji zalogowanego u¿ytkownika
+	\item Maksymalnie jeden u¿ytkownika zalogowany w aplikacji na danych urz¹dzeniu
+	\item Uruchomienie aplikacji w przegl¹darce internetowej np. Chrome, Opera lub Firefox
+	\item Mo¿liwe korzystanie ze wszystkich funkcjonalnoœci prócz logowanie siê i tworzenie konta tylko po zalogowaniu siê u¿ytkownika
+	\item £adowanie szablonów stron internetowych o strukturze HTML (ang.~\emph{HyperText Markup Language})
 \end{itemize}
 
 \section{Projekt bazy danych}
