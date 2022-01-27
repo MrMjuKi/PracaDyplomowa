@@ -3,15 +3,24 @@ Podczas realizacji pracy powstaæ ma autorska aplikacja, której bezpieczeñstwo ma
 
 \section{Analiza wymagañ}
 Projektowana aplikacja ma byæ aplikacj¹ internetow¹, umo¿liwiaj¹c¹ wystawianie og³oszeñ o~produktach, które jej u¿ytkownicy chcieliby oddaæ lub sprzedaæ, jak równie¿ pozwalaj¹c¹ na przegl¹dnie wystawionych og³oszeñ. Zgodnie z powszechnie stosowanymi praktykami, dostêp do oferowanych przez t¹ aplikacjê funkcji powinien byæ ograniczany zgodnie posiadanymi przez u¿ytkowników uprawnieniami. Dlatego w aplikacji powinien dzia³aæ mechanizm rejestrowania u¿ytkowników oraz zarz¹dzania ich kontami. Zarejestrowani u¿ytkownicy, po zalogowaniu, powinni móc: wyœwietlaæ informacje o w³aœcicielu konta, zarz¹dzaæ w³asnymi og³oszeniami, wyœwietlaæ listy wszystkich wystawionych og³oszeñ. 
-% TO DO: Dokoñczyæ ogólny opis miejsca wdro¿enia (system operacyjny, infrastruktura)
-Sama aplikacja wdro¿ona powinna byæ w~systemie ...
+% TO DO: Dokoñczyæ ogólny opis miejsca wdro¿enia (system operacyjny, infrastruktura) OK
+
+Sama aplikacja wdro¿ona powinna byæ w systemie operacyjnym Windows 10. G³ównym komponentem infrastruktury jest serwer aplikacji webowej, w którego sk³ad nale¿y Python z~frameworkiem Flask i bibliotekami. Do pozsota³ych zalicza siê klient z przegl¹dark¹ internetow¹ oraz us³uga baz danych MySQL. Serwer utrzymuje po³¹czenie z klientem odpowiadaj¹c na ¿¹dania wys³ane przez niego, przetwarza dane oraz komunikuje siê z us³ug¹, dziêki bibliotece \texttt{flask\_mysqldb} (rys.~\ref{fig:Rys02/Architektura}).  
+
 
 % TO DO: przyda³by siê diagram z architektur¹, podobny do: https://www.mindinventory.com/blog/wp-content/uploads/2021/01/web-application-architecture-diagram.png
 % ze strony: https://www.mindinventory.com/blog/web-application-architecture/
 % lub, po odpowiedniej modyfikacji, diagram podobny do: https://miro.medium.com/max/700/1*kTu98E30yJeFslxYunOJpA.png
-% ze strony https://cmmorrow.medium.com/using-sqlalchemy-and-flask-to-build-a-simple-data-driven-web-app-17e2d43778bb
+% ze strony https://cmmorrow.medium.com/using-sqlalchemy-and-flask-to-build-a-simple-data-driven-web-app-17e2d43778bb OK
+%\newpage
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.6]{Rys02/Architektura}
+\caption{Diagram architektury aplikacji}
+\label{fig:Rys02/Architektura}
+\end{figure}
 
-Zwykle wymagania aplikacji opisuje siê minimalnie w podziale na: wymagania funkcjonalne i niefunkcjonalne. Pierwsze z nich okreœlaj¹ mo¿liwoœci zapewniane u¿ytkownikowi, je¿eli aplikacja prawid³owo dzia³a. Drugie przedstawiaj¹ mo¿liwoœci wynikaj¹ce oraz na³o¿one ograniczenia w celu zwiêkszenia wydajnoœci aplikacji. Mog¹ definiowaæ funkcje zwi¹zane z bezpieczeñstwem, wydajnoœci¹ lub wygod¹ korzystania z aplikacji. Podzia³ na takie wymagania zastosowano równie¿ w niniejszej pracy. Wymagania te opisano skrótowo w poni¿szych podrozdzia³ach.
+Zwykle wymagania aplikacji opisuje siê minimalnie w podziale na: wymagania funkcjonalne i niefunkcjonalne. Pierwsze z nich okreœlaj¹ mo¿liwoœci zapewniane u¿ytkownikowi, je¿eli aplikacja prawid³owo dzia³a. Drugie przedstawiaj¹ mo¿liwoœci wynikaj¹ce oraz na³o¿one ograniczenia w celu zwiêkszenia wydajnoœci aplikacji. Mog¹ definiowaæ funkcje zwi¹zane z~bezpieczeñstwem, wydajnoœci¹ lub wygod¹ korzystania z aplikacji. Podzia³ na takie wymagania zastosowano równie¿ w niniejszej pracy. Wymagania te opisano skrótowo w poni¿szych podrozdzia³ach.
 \subsection{Wymagania funkcjonalne}
 dostêp do wszystkich wymienionych ni¿ej funkcji, prócz logowanie siê i tworzenie konta, ma byæ mo¿liwy tylko dla zalogowanego u¿ytkownika.
 \begin{itemize}[leftmargin=1cm]
@@ -27,20 +36,19 @@ dostêp do wszystkich wymienionych ni¿ej funkcji, prócz logowanie siê i tworzenie
   
 
 \subsection{Wymagania niefunkcjonalne}
-% TODO: Proszê doczytaæ, czym s¹ wymagania niefunkcjonalne!!!!
-%%      To, co Pan napisa³, jest niepoprawne !!!!!!
+
 \begin{itemize}[leftmargin=1cm]
-  \item Wydajnoœæ: aplikacja powinna obs³u¿yæ ... u¿ytkowników (w tym ... pracuj¹cych równoczeœnie). Czas reakcji powinien byæ akceptowalny, choæ nie jest specjalnie istotny. 
+  \item Wydajnoœæ: aplikacja powinna obs³u¿yæ dwustu u¿ytkowników (w tym trzydziestu pracuj¹cych równoczeœnie). Czas reakcji powinien byæ akceptowalny, choæ nie jest specjalnie istotny. 
 	\item Kompatybilnoœæ: aplikacja ma byæ niezale¿nym systemem, korzystaj¹cym z w³asnej bazy danych (nie przewiduje siê koniecznoœci korzystania z innych systemów b¹dŸ us³ug zewnêtrznych)
-	\item Œrodowisko: aplikacja powinna poprawnie dzia³aæ w popularnych przegl¹darkach internetowych, jak Chrome, Opera lub Firefox (Maksymalnie jeden u¿ytkownika zalogowany w aplikacji na danych urz¹dzeniu, informacje o jego sesji powinny byæ przechowywane); miejscem wdro¿enia aplikacji powinien byæ serwer dzia³aj¹cym pod kontrol¹ systemu operacyjnego ....
+	\item Œrodowisko: aplikacja powinna poprawnie dzia³aæ w popularnych przegl¹darkach internetowych, jak Chrome, Opera lub Firefox (Maksymalnie jeden u¿ytkownika zalogowany w aplikacji na danych urz¹dzeniu, informacje o jego sesji powinny byæ przechowywane); miejscem wdro¿enia aplikacji powinien byæ serwer dzia³aj¹cym pod kontrol¹ systemu operacyjnego Windows 10
   \item Przenoszalnoœæ: nie przewiduje siê koniecznoœci zapewnienia ³atwoœci zmiany ustawieñ lokalizacyjnych aplikacji, zmiany œrodowiska ani importu/eksportu danych
 \end{itemize}
 
 \section{Projekt bazy danych}
 Podczas projektowania schematu bazy danych stworzono kolejno trzy modele: uproszczony model konceptualny, rozszerzony model konceptualny (inaczej model logiczny) oraz model fizyczny. Opieraj¹c siê na nich stworzono i wygenerowano bazê danych u¿yt¹ podczas implementacji aplikacji.
 
-Modelowanie schematów baz danych mo¿e odbywaæ siê z wykorzystaniem ró¿nych notacji. W niniejszej pracy pos³u¿ono siê elementami notacji ,,kurzej ³apki'' (ang.~\emph{Crow's Foot Notation}). Elementy tej notacji pojawiaj¹ siê w ró¿nych standardach modelowania, np. w Notacji In¿ynierii Informacyjnej/Relacyjnej (ang.~\emph{Information Engineering/Relational Notation}, IE/Relational Notation) czy te¿ w Notacji Bakera (ang.~\emph{Barker's Notation}). Wymienione notacje opisano, a nastêpnie porównano w jednym z rodzia³ów atryku³u \cite{AK18}.
-% TO DO: tutaj móg³by Pan wstawiæ jak¹œ referencjê do Ÿród³a/ksi¹¿ki/artyku³u, w którym opisano te notacje
+Modelowanie schematów baz danych mo¿e odbywaæ siê z wykorzystaniem ró¿nych notacji. W niniejszej pracy pos³u¿ono siê elementami notacji ,,kurzej ³apki'' (ang.~\emph{Crow's Foot Notation}). Elementy tej notacji pojawiaj¹ siê w ró¿nych standardach modelowania, np. w Notacji In¿ynierii Informacyjnej/Relacyjnej (ang.~\emph{Information Engineering/Relational Notation}, IE/Relational Notation) czy te¿ w Notacji Bakera (ang.~\emph{Barker's Notation}). Wymienione notacje opisano, a~nastêpnie porównano w jednym z rodzia³ów atryku³u \cite{AK18}.
+
 
 \subsection{Uproszczony model konceptualny}
 Pierwszy z przedstawionych modeli pokazuje encje oraz wystêpuj¹ce pomiêdzy nimi relacje (rys.~\ref{fig:Rys03/UproszczonyModelKonceptualny}). Schemat bazy danych opiera siê na tabeli \texttt{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \texttt{U¿ytkownik} oraz \texttt{Personalia} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \texttt{Personalia} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \texttt{U¿ytkownik} i \texttt{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne.
@@ -88,16 +96,16 @@ Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny ja
 
 %\newpage
 \subsection{Generowanie bazy danych}
-Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (ang.~\emph{Enhanced entity-relationship}), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (patrz na rysunek~\ref{fig:Rys03/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (patrz na rysunek~\ref{fig:Rys03/Success.png}).
-\begin{figure}[h!]
+Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (ang.~\emph{Enhanced entity-relationship}), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (rys.~\ref{fig:Rys03/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (rys.~\ref{fig:Rys03/Success.png}).
+\begin{figure}[htb]
 \centering
 \includegraphics[scale=0.8]{Rys03/EERDiagram.png}
 \caption{Diagram EER utworzony w MySQL Workbench}
 \label{fig:Rys03/EERDiagram.png}
 \end{figure}
 
-%\newpage
-\begin{figure}[h!]
+\newpage
+\begin{figure}[htb]
 \centering
 \includegraphics[scale=0.38]{Rys03/Success.png}
 \caption{Pozytywnie zakoñczone tworzenie bazy w MySQL Workbench}
@@ -105,16 +113,8 @@ Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MyS
 \end{figure}
 
 \section{Implementacja aplikacji}
-\subsection{Wykorzystany framework i biblioteki} % TO DO: o narzêdziach pisze Pan w osobnym rozdziale
-Do budowy aplikacji webowej zdecydowano siê u¿yæ frameworka Flask. Wykorzystano te¿ dodatkowe biblioteki, klasy, funkcje itp.\, co widaæ na listingu~\ref{lst:Python biblioteki}. U¿yto, miêdzy innymi, bibliotekê \texttt{flask\_mysqldb} zapewniaj¹c¹ po³¹czenie miêdzy Flask a MySQL. Klasa \texttt{MySQLdb.cursors} pozwala wykonywaæ i zapisywaæ wynik zapytania SQL w zmiennej typu s³ownik.
-\begin{lstlisting}[language=Python, caption=Wykorzystane biblioteki w projekcie aplikacji, label={lst:Python biblioteki}]
-from flask import Flask, render_template, request, session
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
-\end{lstlisting}
-
 \subsection{Podstawa programu}
-Ka¿dorazowo przy uruchamianiu aplikacji wykonywany jest poni¿szy kod (patrz na listing~\ref{lst:Podstawa programu}). Buduje on strukturê programu, aby w kolejnym kroku uruchomiæ go pod adresem \texttt{localhost} i na porcie o numerze \texttt{4449}.
+Ka¿dorazowo przy uruchamianiu aplikacji wykonywany jest poni¿szy kod (lis.~\ref{lst:Podstawa programu}). Buduje on strukturê programu, aby w kolejnym kroku uruchomiæ go pod adresem IP urz¹dzenia i na porcie o numerze \texttt{4449}.
 %\newpage
 \begin{lstlisting}[language=Python, caption=Podstawowy kod uruchamiany przy w³¹czeniu aplikacji, 
 label={lst:Podstawa programu}]
@@ -125,12 +125,12 @@ app = Flask(__name__)
 #tutaj siê mieœci reszta kodu aplikacji#
 
 if __name__ == '__main__':
-    app.run('localhost', 4449)
+    app.run('0.0.0.0', 4449)
 \end{lstlisting}
 
 
 \subsection{Utworzenie po³¹czenia z baz¹ danych}
-Aby mo¿na by³o skorzystaæ z bazy danych utworzono do niej po³¹czenie (patrz na listing~\ref{lst:Konfiguracja polaczenia bazy danych i aplikacji}).
+Aby mo¿na by³o skorzystaæ z bazy danych utworzono do niej po³¹czenie (lis.~\ref{lst:Konfiguracja polaczenia bazy danych i aplikacji}).
 \begin{lstlisting}[language=Python, caption=Konfiguracja po³¹czenia bazy danych i aplikacji, label={lst:Konfiguracja polaczenia bazy danych i aplikacji}]
 app.secret_key = 'klucz'
 app.config['MYSQL_HOST'] = 'localhost'
@@ -141,7 +141,7 @@ app.config['MYSQL_DB'] = 'daza_danych_ofert'
 
 \subsection{Implementacja wymaganych funkcji}
 \subsubsection{Tworzenie nowego konta}
-Na pocz¹tku sprawdzane jest, czy u¿ytkownik nie jest ju¿ zalogowany. Je¿eli jest, to wyœwietla siê  strona domowa z informuj¹cym komunikatem. W przeciwnym przypadku ³aduje siê podstrona rejestracji z szablonem do wype³nienia. Po uzupe³nieniu pól i zatwierdzeniu danych przyciskiem tworzone s¹ nowe wpisy w encji \texttt{U¿ytkownika} oraz \texttt{Personalia} (patrz na listing~\ref{lst:rejestracja}).
+Na pocz¹tku sprawdzane jest, czy u¿ytkownik nie jest ju¿ zalogowany. Je¿eli jest, to wyœwietla siê  strona domowa z informuj¹cym komunikatem. W przeciwnym przypadku ³aduje siê podstrona rejestracji z szablonem do wype³nienia. Po uzupe³nieniu pól i zatwierdzeniu danych przyciskiem tworzone s¹ nowe wpisy w encji \texttt{U¿ytkownika} oraz \texttt{Personalia} (lis.~\ref{lst:rejestracja}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstronê /rejestracja, label={lst:rejestracja}]
 @app.route('/rejestracja', methods=['GET', 'POST'])
 def rejestracja():
@@ -163,7 +163,7 @@ def rejestracja():
 \end{lstlisting}
 
 \subsubsection{Logowanie siê na konto}
-Funkcja zaczyna siê od potwierdzenia, czy u¿ytkownik jest zalogowany na konto. Je¿eli jest, to wyœwietla siê  strona domowa z odpowiednim komunikatem. W przeciwnym razie ³aduje siê podstrona umo¿liwiaj¹ca zalogowanie siê. Po naciœniêciu przycisku ``Zaloguj siê`` wykonuje siê kwerenda SQL sprawdzaj¹ca, czy konto o podanym loginie i haœle istnieje w bazie. Jeœli znajduje to tworzy siê nowa sesja. Przechowuje ona dwie wrtoœci login i ID u¿ytkownika. W przeciwnym wypadku ³adowana jest strona domowa z komunikatem o nieudanej próbie logowania (patrz na listing~\ref{lst:logowanie}).   
+Funkcja zaczyna siê od potwierdzenia, czy u¿ytkownik jest zalogowany na konto. Je¿eli jest, to wyœwietla siê  strona domowa z odpowiednim komunikatem. W przeciwnym razie ³aduje siê podstrona umo¿liwiaj¹ca zalogowanie siê. Po naciœniêciu przycisku ``Zaloguj siê`` wykonuje siê kwerenda SQL sprawdzaj¹ca, czy konto o podanym loginie i haœle istnieje w bazie. Jeœli znajduje to tworzy siê nowa sesja. Przechowuje ona dwie wrtoœci login i ID u¿ytkownika. W przeciwnym wypadku ³adowana jest strona domowa z komunikatem o nieudanej próbie logowania (lis.~\ref{lst:logowanie}).   
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstronê /logowanie, label={lst:logowanie}]
 @app.route('/logowanie', methods=['GET', 'POST'])
 def logowanie():
@@ -184,7 +184,7 @@ def logowanie():
     return render_template('logowanie.html')
 \end{lstlisting}
 \subsubsection{Dodanie nowej oferty}
-Najpierw funkcja upewnia siê, czy u¿ytkownik jest zalogowany. Je¿eli jest, to ³adowana jest podstrona pozwalaj¹ca dodaæ now¹ ofertê. W innym przypadku aplikacja wraca do strony g³ównej i wyœwietla odpowiedni komunikat. Po wype³nieniu pól i zatwierdzeniu przyciskiem tworzony jest nowy wpis w encji \texttt{Oferta} na podstawie wprowadzonych danych i informacji o sesji (patrz na listing~\ref{lst:dodajOferte}).
+Najpierw funkcja upewnia siê, czy u¿ytkownik jest zalogowany. Je¿eli jest, to ³adowana jest podstrona pozwalaj¹ca dodaæ now¹ ofertê. W innym przypadku aplikacja wraca do strony g³ównej i wyœwietla odpowiedni komunikat. Po wype³nieniu pól i zatwierdzeniu przyciskiem tworzony jest nowy wpis w encji \texttt{Oferta} na podstawie wprowadzonych danych i informacji o sesji (lis.~\ref{lst:dodajOferte}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /dodajOferte, label={lst:dodajOferte}]
 def dodawanieOferty():
     if not session:
@@ -201,7 +201,7 @@ def dodawanieOferty():
     return render_template('/dodawanieoferty.html')
 \end{lstlisting}
 \subsubsection{Wyœwietlanie i usuwanie ofert stworzonych przez u¿ytkownika}
-W piwerwszej kolejnoœci funkcja sprawdza czy u¿ytkownika jest zalogowany. Je¿eli jest, to wyœwietla siê podstrona ze wszystkimi ofertami, znalezionymi w bazie danych, które nale¿¹ do u¿ytkownika. W przeciwnym razie ³aduje siê strona domowa z dopasowanym komunikatem. Ka¿da oferta posiada przycisk ``Usuñ``. Za jego pomoc¹ mo¿na zliklidowaæ dan¹ ofertê z bazy danych. Po jego naciœniêciu kwerenda usuwa ofertê z encji \texttt{Oferta}, przechodzi na stronê domow¹ i wyœwietla adekwatn¹ informacjê (patrz na listing~\ref{lst:mojeOferty}).
+W piwerwszej kolejnoœci funkcja sprawdza czy u¿ytkownika jest zalogowany. Je¿eli jest, to wyœwietla siê podstrona ze wszystkimi ofertami, znalezionymi w bazie danych, które nale¿¹ do u¿ytkownika. W przeciwnym razie ³aduje siê strona domowa z dopasowanym komunikatem. Ka¿da oferta posiada przycisk ``Usuñ``. Za jego pomoc¹ mo¿na zliklidowaæ dan¹ ofertê z bazy danych. Po jego naciœniêciu kwerenda usuwa ofertê z encji \texttt{Oferta}, przechodzi na stronê domow¹ i wyœwietla adekwatn¹ informacjê (lis.~\ref{lst:mojeOferty}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /mojeOferty, label={lst:mojeOferty}]
 def mojeoferty():
     if not session:
@@ -215,7 +215,7 @@ def mojeoferty():
     return render_template('mojeOferty.html' ,listaOfert=listaOfert(session['id']))
 \end{lstlisting}
 \subsubsection{Wyœwietlanie i edytowanie personalnych danych u¿ytkownika}
-Na pocz¹tku sprawdza czy sesja u¿ytkownika jest aktywa. Je¿eli jest, to ³aduje podstronê z personalnymi danymi nale¿¹cymi do u¿ytkownika. Ponadto istnieje mo¿liwoœæ ich uaktualnienia. Po wpisaniu nowego imienia, nazwiska, numeru telefonu oraz adres e-mail i zatwierdzenia przyciskiem ``Zapisz`` wykonuje siê kwerenda aktualizuj¹ca wpis w encji \texttt{Personalia}. Po jej pomyœlnym zakoñczeniu wyœwietla siê strona g³ówna (patrz na listing~\ref{lst:mojeDane}).		
+Na pocz¹tku sprawdza czy sesja u¿ytkownika jest aktywa. Je¿eli jest, to ³aduje podstronê z~personalnymi danymi nale¿¹cymi do u¿ytkownika. Ponadto istnieje mo¿liwoœæ ich uaktualnienia. Po wpisaniu nowego imienia, nazwiska, numeru telefonu oraz adres e-mail i zatwierdzenia przyciskiem ``Zapisz`` wykonuje siê kwerenda aktualizuj¹ca wpis w encji \texttt{Personalia}. Po jej pomyœlnym zakoñczeniu wyœwietla siê strona g³ówna (lis.~\ref{lst:mojeDane}).		
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /mojeDane, label={lst:mojeDane}]
 @app.route('/mojeDane', methods=['GET', 'POST'])
 def mojeDane():
@@ -240,8 +240,8 @@ def mojeDane():
     return render_template('mojeDane.html', mojeDane=mojeDane)
 \end{lstlisting}
 \subsubsection{Wylogowanie siê z konta}
-W pierwszej kolejnoœci funkcja sprawdza, czy nie ma aktywnej sesji. Je¿eli nie ma to u¿ytkownik wraca na stronê g³ówna z odpowiednik komunikatem. W przeciwnym wypadku usuwa istniej¹c¹ sesjê i ³aduje stronê g³ówn¹ z komunikatem o pomyœlnym wylogowaniu siê (patrz na listing~\ref{lst:wyloguj}).
-% TO DO: proszê zwróciæ uwagê na literówki: przegieblo 
+W pierwszej kolejnoœci funkcja sprawdza, czy nie ma aktywnej sesji. Je¿eli nie ma to u¿ytkownik wraca na stronê g³ówna z odpowiednik komunikatem. W przeciwnym wypadku usuwa istniej¹c¹ sesjê i ³aduje stronê g³ówn¹ z komunikatem o pomyœlnym wylogowaniu siê (lis.~\ref{lst:wyloguj}).
+% TO DO: proszê zwróciæ uwagê na literówki: przegieblo OK
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /wyloguj, label={lst:wyloguj}]
 @app.route('/wyloguj')
 def wyloguj():
@@ -249,10 +249,10 @@ def wyloguj():
         return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Nie jestes zalogowany na zadne konto')
     session.pop('id', None)
     session.pop('username', None)
-    return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Wylogowanie przegieblo pomyslnie')
+    return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Wylogowanie przebieglo pomyslnie')
 \end{lstlisting}
 \subsubsection{Wyœwietlanie wszystkich ofert}
-Funkcja ka¿dorazowo wykonuje siê po uruchomieniu programu. Odpowiada ona za ³adowanie siê strony g³ównej oraz wyœwietlanie wszystkich wpisów z encji \texttt{Oferta}, je¿eli istnieje aktywna sesja u¿ytkownika (patrz na listing~\ref{lst:home}).
+Funkcja ka¿dorazowo wykonuje siê po uruchomieniu programu. Odpowiada ona za ³adowanie siê strony g³ównej oraz wyœwietlanie wszystkich wpisów z encji \texttt{Oferta}, je¿eli istnieje aktywna sesja u¿ytkownika (lis.~\ref{lst:home}).
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na strone g³ówn¹ lub po za³adowaniu podstawy programu, label={lst:home}]
 def listaOfert(IDuzytkownika):
     listaOfert = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
