@@ -3,16 +3,9 @@ Podczas realizacji pracy powstaæ ma autorska aplikacja, której bezpieczeñstwo ma
 
 \section{Analiza wymagañ}
 Projektowana aplikacja ma byæ aplikacj¹ internetow¹, umo¿liwiaj¹c¹ wystawianie og³oszeñ o~produktach, które jej u¿ytkownicy chcieliby oddaæ lub sprzedaæ, jak równie¿ pozwalaj¹c¹ na przegl¹dnie wystawionych og³oszeñ. Zgodnie z powszechnie stosowanymi praktykami, dostêp do oferowanych przez t¹ aplikacjê funkcji powinien byæ ograniczany zgodnie posiadanymi przez u¿ytkowników uprawnieniami. Dlatego w aplikacji powinien dzia³aæ mechanizm rejestrowania u¿ytkowników oraz zarz¹dzania ich kontami. Zarejestrowani u¿ytkownicy, po zalogowaniu, powinni móc: wyœwietlaæ informacje o w³aœcicielu konta, zarz¹dzaæ w³asnymi og³oszeniami, wyœwietlaæ listy wszystkich wystawionych og³oszeñ. 
-% TO DO: Dokoñczyæ ogólny opis miejsca wdro¿enia (system operacyjny, infrastruktura) OK
 
 Sama aplikacja wdro¿ona powinna byæ w systemie operacyjnym Windows 10. G³ównym komponentem infrastruktury jest serwer aplikacji webowej, w którego sk³ad nale¿y Python z~frameworkiem Flask i bibliotekami. Do pozosta³ych zalicza siê klient z przegl¹dark¹ internetow¹ oraz us³uga baz danych MySQL. Serwer utrzymuje po³¹czenie z klientem odpowiadaj¹c na ¿¹dania wys³ane przez niego, przetwarza dane oraz komunikuje siê z us³ug¹, dziêki bibliotece \texttt{flask\_mysqldb} (rys.~\ref{fig:Rys02/Architektura}).  
 
-
-% TO DO: przyda³by siê diagram z architektur¹, podobny do: https://www.mindinventory.com/blog/wp-content/uploads/2021/01/web-application-architecture-diagram.png
-% ze strony: https://www.mindinventory.com/blog/web-application-architecture/
-% lub, po odpowiedniej modyfikacji, diagram podobny do: https://miro.medium.com/max/700/1*kTu98E30yJeFslxYunOJpA.png
-% ze strony https://cmmorrow.medium.com/using-sqlalchemy-and-flask-to-build-a-simple-data-driven-web-app-17e2d43778bb OK
-%\newpage
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.6]{Rys02/Architektura}
@@ -68,8 +61,6 @@ Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wer
 \label{fig:Rys03/ModelLogiczny}
 \end{figure}
 
-%\newpage
-%\vfill
 \subsection{Model fizyczny}
 Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny jak na rysunku~\ref{fig:Rys03/ModelFizyczny}). Podczas nazywania elementów tego modelu zrezygnowano z u¿ywania polskich znaków diakrytycznych. Encje maj¹ po dwie kolumny: lewa zawiera nazwy indeksów, oznaczenia kluczy g³ównych i obcych, natomiast w prawej kolumnie okreœlono cechy poszczególnych indeksów. Znaczenia u¿ytych skrótów wyjaœniono poni¿ej.
 \begin{itemize}[leftmargin=1cm]
@@ -94,7 +85,6 @@ Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny ja
 \label{fig:Rys03/ModelFizyczny}
 \end{figure}
 
-%\newpage
 \subsection{Generowanie bazy danych}
 Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (ang.~\emph{Enhanced entity-relationship}), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (rys.~\ref{fig:Rys03/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (rys.~\ref{fig:Rys03/Success.png}).
 \begin{figure}[htb]
@@ -115,7 +105,7 @@ Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MyS
 \section{Implementacja aplikacji}
 \subsection{Podstawa programu}
 Ka¿dorazowo przy uruchamianiu aplikacji wykonywany jest poni¿szy kod (lis.~\ref{lst:Podstawa programu}). Buduje on strukturê programu, aby w kolejnym kroku uruchomiæ go pod adresem IP urz¹dzenia i na porcie o numerze \texttt{4449}.
-%\newpage
+
 \begin{lstlisting}[language=Python, caption=Podstawowy kod uruchamiany przy w³¹czeniu aplikacji, 
 label={lst:Podstawa programu}, basicstyle=\footnotesize\ttfamily]
 #tutaj zadeklarowane s¹ biblioteki#
@@ -241,7 +231,6 @@ def mojeDane():
 \end{lstlisting}
 \subsubsection{Wylogowanie siê z konta}
 W pierwszej kolejnoœci funkcja sprawdza, czy nie ma aktywnej sesji. Je¿eli nie ma to u¿ytkownik wraca na stronê g³ówna z odpowiednik komunikatem. W przeciwnym wypadku usuwa istniej¹c¹ sesjê i ³aduje stronê g³ówn¹ z komunikatem o pomyœlnym wylogowaniu siê (lis.~\ref{lst:wyloguj}).
-% TO DO: proszê zwróciæ uwagê na literówki: przegieblo OK
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /wyloguj, label={lst:wyloguj}, basicstyle=\footnotesize\ttfamily]
 @app.route('/wyloguj')
 def wyloguj():
