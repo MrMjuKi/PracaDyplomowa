@@ -170,7 +170,7 @@ def logowanie():
             session['username'] = konto['login']
             return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Udalo sie zalogowac. Witaj ' + session['username'])
         else:
-            return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Nie udalo sie zalogowac. Wpisales zle haslo lub login.')
+            return render_template('index.html' , msg ='Nie udalo sie zalogowac. Wpisales zle haslo lub login.')
     return render_template('logowanie.html')
 \end{lstlisting}
 \subsubsection{Dodanie nowej oferty}
@@ -178,7 +178,7 @@ Najpierw funkcja upewnia siê, czy u¿ytkownik jest zalogowany. Je¿eli jest, to ³a
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /dodajOferte, label={lst:dodajOferte}, basicstyle=\footnotesize\ttfamily]
 def dodawanieOferty():
     if not session:
-        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie lub utworz konto, by dodac oferte')
+        return render_template('index.html' , msg ='Zaloguj sie lub utworz konto, by dodac oferte')
     if request.method == 'POST':
         nazwaProduktu = request.form.get('inputNameOfProduct')
         opis = request.form.get('inputDescription')
@@ -195,7 +195,7 @@ W piwerwszej kolejnoœci funkcja sprawdza czy u¿ytkownika jest zalogowany. Je¿eli
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstrone /mojeOferty, label={lst:mojeOferty}, basicstyle=\footnotesize\ttfamily]
 def mojeoferty():
     if not session:
-        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie, by zobaczyc swoje oferty')    
+        return render_template('index.html' , msg ='Zaloguj sie, by zobaczyc swoje oferty')    
     
     if request.method == 'POST':
         usunOferte = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -210,7 +210,7 @@ Na pocz¹tku sprawdza czy sesja u¿ytkownika jest aktywa. Je¿eli jest, to ³aduje p
 @app.route('/mojeDane', methods=['GET', 'POST'])
 def mojeDane():
     if not session:
-        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Zaloguj sie, by zobaczyc swoje dane')
+        return render_template('index.html' , msg ='Zaloguj sie, by zobaczyc swoje dane')
     if request.method == 'POST':
         imie = request.form.get('inputName')
         nazwisko = request.form.get('inputSurname')
@@ -235,10 +235,10 @@ W pierwszej kolejnoœci funkcja sprawdza, czy nie ma aktywnej sesji. Je¿eli nie m
 @app.route('/wyloguj')
 def wyloguj():
     if not session:
-        return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Nie jestes zalogowany na zadne konto')
+        return render_template('index.html' , msg ='Nie jestes zalogowany na zadne konto')
     session.pop('id', None)
     session.pop('username', None)
-    return render_template('index.html' ,listaOfert=listaOfert('ANY'), msg ='Wylogowanie przebieglo pomyslnie')
+    return render_template('index.html' , msg ='Wylogowanie przebieglo pomyslnie')
 \end{lstlisting}
 \subsubsection{Wyœwietlanie wszystkich ofert}
 Funkcja ka¿dorazowo wykonuje siê po uruchomieniu programu. Odpowiada ona za ³adowanie siê strony g³ównej oraz wyœwietlanie wszystkich wpisów z encji \texttt{Oferta}, je¿eli istnieje aktywna sesja u¿ytkownika (lis.~\ref{lst:home}).

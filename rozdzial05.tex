@@ -1,0 +1,77 @@
+\chapter{Implementacja zmian w aplikacji}
+Obecny rozdzia³ skupia siê na zmianach dokonanych w aplikacji, które zwiêksz¹ jej bezpieczeñstwo. Poprawki w kodzie wynikaj¹ z analizy podsumowania przeprowadzonego audytu we wczeœniejszej czêœci pracy.
+
+\section{Limit prób logowañ}
+W celu ograniczenia du¿ej iloœci ¿¹dañ pojawiaj¹cych siê w krótkim zakresie czasu na stronie logowania zdecydowano siê zadeklarowaæ limity. U¿yto do tego funkcji z biblioteki \texttt{flask\_limiter} i \texttt{flask\_limiter.util} jak na listingu~\ref{lst:limitLogowan}. Skonfigurowanie wymaga³o zadeklarowania globalnej informacji, jakiej aplikacji oraz adresu IP tyczy siê limit (lis.~\ref{lst:globalLimiter}). Dla podstrony logowanie skonfigurowano maksymalnie piêæ logowañ na godzinê (lis.~\ref{lst:logowanieLimit}). Dodatkowo dla b³êdu 429 ustawiono informacjê ''Przekroczyles limit zadan'' (lis.~\ref{lst:429error}).
+
+\begin{lstlisting}[language=Python, caption=Biblioteki u¿yte przy konfiguracji limitów, label={lst:limitLogowan}, basicstyle=\footnotesize\ttfamily]
+flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Globalna konfiguracja limitera, label={lst:globalLimiter}, basicstyle=\footnotesize\ttfamily]
+limiter = Limiter(app, key_func=get_remote_address)
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Skonfigurowanie limitu logowañ, label={lst:logowanieLimit}, basicstyle=\footnotesize\ttfamily]
+@limiter.limit("5/hour")
+# tutaj funkcja podstrony logowania siê 
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Skonfigurowanie informacji przy b³êdzie 429, label={lst:429error}, basicstyle=\footnotesize\ttfamily]
+@app.errorhandler(429)
+def ratelimit_handler():
+  return "Przekroczyles limit zadan"
+\end{lstlisting}
+
+\section{Walidacja pól na podstronie tworzenia konta}
+Aby zapobiec pojawianiu siê b³êdów znalezionych na podstronie rejestracji utworzono walidacjê dla podawanych na niej danych (lis.~\ref{lst:bibliotekiWalidacja}). W celu sprawdzenia poprawnej formy e-mailu zaimportowano funkcjê (lis.~\ref{lst:walidacjeRejestracja}), która w polu u¿ytkownik testuje, czy pole jest puste i posiada tylko litery i cyfry. Dla pola e-mail sprawdzana jest poprawnoœæ budowy wpisanego e-mailu oraz to czy pole jest wype³nione. W ostatnim polu has³o jest  weryfikowane tylko wystêpowanie zawartoœci, lub jej brak. W przypadku niespe³nienia którejœ z walidacji, pojawia siê stosowny komunikat.
+
+\begin{lstlisting}[language=Python, caption=Biblioteka u¿yta przy walidacji danych, label={lst:bibliotekiWalidacja}, basicstyle=\footnotesize\ttfamily]
+import re
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption={Skonfigurowanie walidaji pola login, e-mail i has³o}, label={lst:walidacjeRejestracja}, basicstyle=\footnotesize\ttfamily]
+if not uzytkownik.isalnum():
+	return render_template('index.html', msg ='Zla nazwa uzytkownika')
+
+if not re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email):
+	return render_template('index.html', msg ='Zly e-mail')
+        
+if not haslo:
+	return render_template('index.html', msg ='Uzupelnij pole haslo')
+\end{lstlisting}
+
+\section{Weryfikacja nazwy u¿ytkownika i adresu e-mail}
+Równie¿ w tej implementacji wykorzystano funkcjê widoczn¹ na listingu~\ref{lst:bibliotekiWalidacja}. Wed³ug modelu fizycznego bazy danych (rys.~\ref{fig:Rys03/ModelFizyczny}) wartoœci e-mil oraz login powinny byæ unikalne dla ka¿dego u¿ytkownika. Przy rejestracji dopisano kod weryfikuj¹cy, czy wpisany e-mail lub login nie  zosta³ ju¿ u¿yty w bazie przez inne konto. Je¿eli tak, to wyœwietla odpowiednia informacjê (lis.~\ref{lst:weryfikacja}).
+
+\begin{lstlisting}[language=Python, caption={Weryfikacja loginu i e-mailu podczas rejestracji}, label={lst:weryfikacja}, basicstyle=\footnotesize\ttfamily]
+szukanieEmailu = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+szukanieEmailu.execute('SELECT `e-mail` FROM personalia WHERE `e-mail` =  % s', [email])
+mysql.connection.commit
+if szukanieEmailu.fetchone():
+	return render_template('index.html', msg ='Konto o podanym e-mailu istnieje')
+
+szukanieLoginu = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+szukanieLoginu.execute('SELECT * FROM uzytkownik WHERE login =  % s', [uzytkownik])
+mysql.connection.commit
+if szukanieLoginu.fetchone():
+	return render_template('index.html', msg ='Konto o podanym loginie istnieje')
+\end{lstlisting}
+
+\section{Polityka jakoœci has³a i cieniowanie has³a}
+Do zaprogramowania obu zmian wykorzystano biblioteki widoczne na listingu~\ref{lst:bibliotekiWalidacja} i listingu~\ref{lst:bibliotekiCieniowanie}. W celu zwiêkszenia minimalnej jakoœci has³a ustawiano wymagania jakie powinno ono spe³niaæ. Nale¿¹ do nich: znak specjalny, ma³a litera, du¿a litera, cyfra i posiadanie ³¹cznie oœmiu lub wiêcej znaków (lis.~\ref{lst:jakoscICieniowanieHasla}). Ponadto dla zwiêkszenia bezpieczeñstwa hase³ s¹ one przechowywane zacieniowane w bazie danych. W sytuacji logowania wpisane has³o jest cieniowane i~porównywane z hashem zapisanym w bazie danych.
+
+\begin{lstlisting}[language=Python, caption={Biblioteka u¿yta do konfiguracji cieniowania has³a}, label={lst:bibliotekiCieniowanie}, basicstyle=\footnotesize\ttfamily]
+from hashlib import blake2b
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption={Sprawdzanie jakoœci i cieniowanie has³a}, label={lst:jakoscICieniowanieHasla}, basicstyle=\footnotesize\ttfamily]
+if not re.search('[!@#$%^&*()\-_=+[{\]}\\|;:/?.>,<]', haslo) or not re.search('[a-z]', haslo) or  not re.search('[A-Z]', haslo) or not re.search('[0-9]', haslo) or len(haslo)<8:
+	return render_template('index.html', msg ='Zbyt slabe haslo')
+
+hashHaslo = blake2b(('b'+haslo).encode('utf-8')).hexdigest()
+\end{lstlisting}
+
+\section{Implementacja protoko³u HTTPS}
+%Zastanawiam siê implementcj¹
