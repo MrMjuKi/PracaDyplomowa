@@ -11,7 +11,6 @@ Audyt zostanie przeprowadzony w œrodowisku sk³adaj¹cym siê z dwóch urz¹dzeñ bêd¹
  
 \section{Przeprowadzenie audytu}
 \subsection{Skan narzêdziem SQL Map}
-Czêœæ audytu przeprowadzona narzêdziem SQL Map
 Na wstêpie przeskanowano g³ówn¹ stronê w poszukiwaniu parametrów GET, które mo¿na by³oby wykorzystaæ do ataku SQL Injection (rys.~\ref{fig:Rys04/SQLMap1.png}).
 
 \begin{figure}[htb]
@@ -21,7 +20,7 @@ Na wstêpie przeskanowano g³ówn¹ stronê w poszukiwaniu parametrów GET, które mo¿n
 \label{fig:Rys04/SQLMap1.png}
 \end{figure}
 
-Narzêdzie nie znalaz³o ¿adnego parametru, lecz zaleci³o uruchomienie komendy ponownie z prze³¹czk¹ crawl (okreœla jak g³êboko skanuje podstrony)  o wartoœci 2. Przeszukuje ona podstrony w celu znalezienia parametrów GET, do których mo¿na siê dostaæ przez stronê napisan¹ w komendzie. W tym przypadku jest to strona g³ówna. W dalszej kolejnoœci wybrano opcjê, aby sprawdziæ pliki .xml (je¿eli znajdzie) oraz liczbê w¹tków. Finalnie skan nie znalaz³ ¿adnej podatnoœci (rys.~\ref{fig:Rys04/SQLMap2.png}). Nie uda³o siê zlokalizowaæ parametrów GET do wykonania ataku. W~nastêpnej czêœci wykonane zostan¹ próby poszukania parametrów POST.
+Narzêdzie nie znalaz³o ¿adnego parametru, lecz zaleci³o uruchomienie komendy ponownie z~prze³¹czk¹ \texttt{crawl} (okreœla jak g³êboko skanuje podstrony)  o wartoœci 2. Przeszukuje ona podstrony w celu znalezienia parametrów GET, do których mo¿na siê dostaæ przez stronê napisan¹ w komendzie. W tym przypadku jest to strona g³ówna. W dalszej kolejnoœci wybrano opcjê, aby sprawdziæ pliki .xml (je¿eli znajdzie) oraz liczbê w¹tków. Finalnie skan nie znalaz³ ¿adnej podatnoœci (rys.~\ref{fig:Rys04/SQLMap2.png}). Nie uda³o siê zlokalizowaæ parametrów GET do wykonania ataku. W~nastêpnej czêœci wykonane zostan¹ próby poszukania parametrów POST.
 
 %\newpage
 \begin{figure}[htb]
@@ -47,7 +46,8 @@ W celu przetestowania funkcjonalnoœci logowania siê, zdecydowano siê na u¿ycie i
 \label{Rys04/console.png}
 \end{figure}
 
-Nastêpne skany maj¹ na celu sprawdzenie metodê rejestrowania siê. Podobnie jak w przypadku wczeœniejszego testowania funkcjonalnoœci zdecydowano siê na u¿ycie kreatora. Wszystkie parametry ustawiano tak samo, z wyj¹tkiem adresu URL (rys.~\ref{fig:Rys04/SQLMap3.png}). Podczas wykonywania testów aplikacja przesta³a dzia³aæ i wyœwietli³a komunikat pokazany na rysunku (rys.~\ref{Rys04/error.png}).  B³¹d jest spowodowanym prób¹ utworzenia dwóch u¿ytkowników o takim samym loginie. Wracaj¹c do modelu bazy danych mo¿na zaobserwowaæ, i¿ ka¿dy u¿ytkownik powinien posiadaæ unikaln¹ nazwê loginu. Uniemo¿liwi³ on dokoñczenie sprawdzania funkcjonalnoœci przed innymi podatnoœciami. 
+\newpage
+Nastêpne skany maj¹ na celu sprawdzenie metodê rejestrowania siê. Podobnie jak w przypadku wczeœniejszego testowania funkcjonalnoœci zdecydowano siê na u¿ycie kreatora. Wszystkie parametry ustawiano tak samo, z wyj¹tkiem adresu URL (rys.~\ref{fig:Rys04/SQLMap3.png}). Podczas wykonywania testów aplikacja przesta³a dzia³aæ i wyœwietli³a komunikat pokazany na rysunku (rys.~\ref{Rys04/error.png}).  B³¹d jest spowodowanym prób¹ utworzenia dwóch u¿ytkowników o takim samym loginie. Wracaj¹c do modelu fizycznego bazy danych (rys.~\ref{fig:Rys03/ModelFizyczny}) mo¿na zaobserwowaæ, i¿ ka¿dy u¿ytkownik powinien posiadaæ unikaln¹ nazwê loginu. Uniemo¿liwi³ on dokoñczenie sprawdzania funkcjonalnoœci przed innymi podatnoœciami. 
 
 \begin{figure}[htb]
 \centering
@@ -70,7 +70,7 @@ Kolejnym narzêdziem wykorzystanym przy audycie jest Metasploit. Na wstêpie u¿yto
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.8]{Rys04/Metasploit1.png}
-\caption{Konfiguracja WMAPa}
+\caption{Konfiguracja plugina WMAP}
 \label{Rys04/Metasploit1.png}
 \end{figure}
 
@@ -81,7 +81,7 @@ Kolejnym narzêdziem wykorzystanym przy audycie jest Metasploit. Na wstêpie u¿yto
 \label{Rys04/console2.png}
 \end{figure}
 
-Na koñcuwybrano exploit \texttt{scanner/mysql/mysql\_login} w celu odgadniêcia loginu i has³a do us³ugi bazy danych MySQL. Na rysunku~\ref{Rys04/Metasploit2.png} pokazano skonfigurowany poprawnie atak. Plik \texttt{rockyou.txt} zawiera listê najczêœcniej wykorzystywanych wyrazów jako login lub has³o. Kolejny ekranu pokazuje próbê uruchomienia exploita, która zakoñczy³a siê niepowodzeniem (rys~\ref{Rys04/Metasploit3.png}).
+Na koñcu wybrano exploit \texttt{scanner/mysql/mysql\_login} w celu odgadniêcia loginu i has³a do us³ugi bazy danych MySQL. Na rysunku~\ref{Rys04/Metasploit2.png} pokazano skonfigurowany poprawnie atak. Plik \texttt{rockyou.txt} zawiera listê najczêœcniej wykorzystywanych wyrazów jako login lub has³o. Kolejny ekranu pokazuje próbê uruchomienia exploita, która zakoñczy³a siê niepowodzeniem (rys~\ref{Rys04/Metasploit3.png}).
 
 \begin{figure}[htb]
 \centering
@@ -98,4 +98,4 @@ Na koñcuwybrano exploit \texttt{scanner/mysql/mysql\_login} w celu odgadniêcia l
 \end{figure}
 
 \section{Analiza znalezionych podatnoœci}
-Na podstawie wykonanego audytu zlokalizowano kilka s³aboœci aplikacji. Dla funkcji logowania nie znaleziono podatnoœci, natomiast nie posiada ona limitu logowañ na dany zakres czasu. Nara¿a j¹ to na przyjmowanie bardzo du¿ej iloœci ¿¹dañ w krótkim okresie czasu, co mo¿e spowodowaæ zwolnienie dzia³ania lub jej ca³kowite wy³¹czenie siê. Podczas tworzenia konta nie wszystkie pola posiadaj¹ sprawdzanie poprawnoœci wprowadzonych wartoœci. Dodatkowo funkcja nie weryfikuje, czy u¿ytkownik o wspinanym loginie ju¿ istnieje w bazie. Obie podatnoœci wp³ywaj¹ krytycznie na dzia³anie aplikacji, poniewa¿ j¹ wy³¹czaj¹. 
+Na podstawie wykonanego audytu zlokalizowano kilka s³aboœci aplikacji. Dla funkcji logowania nie znaleziono podatnoœci, natomiast nie posiada ona limitu logowañ w danym zakres czasu. Nara¿a j¹ to na przyjmowanie bardzo du¿ej iloœci ¿¹dañ od klienta w krótkim przedziale czasu, co mo¿e spowodowaæ zwolnienie dzia³ania lub jej ca³kowite wy³¹czenie siê. Podczas tworzenia konta nie wszystkie pola posiadaj¹ sprawdzanie poprawnoœci wprowadzonych wartoœci. Dodatkowo funkcja nie weryfikuje, czy u¿ytkownik o wpisanym loginie ju¿ istnieje w bazie. Obie podatnoœci wp³ywaj¹ krytycznie na dzia³anie aplikacji, poniewa¿ j¹ wy³¹czaj¹. Niezanotowano równie¿ ¿adnych minimalnych wymagañ co do jakoœci has³a takich jak: du¿a litera, znak specjalny, cyfra. Dane przy audytowanych funkjonalnoœciach przesy³ane s¹ miêdzy klientem a serwerem aplikacji jawnie. U¿ywaj¹ one protok³u HTTP (ang.~\emph{Hypertext Transfer Protocol}), który ich nie szyfruje i nie korzysta z certyfikatu SSL (ang.~\emph{Secure Sockets Layer}).   
