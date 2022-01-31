@@ -1,5 +1,6 @@
-\chapter{Implementacja zmian w aplikacji}
-W rozdziale skupiono siê na dokonanych zmianach w aplikacji zwiêkszaj¹cych jej bezpieczeñstwo. Poprawki w kodzie wynikaj¹ z analizy podsumowania przeprowadzonego audytu.
+\chapter{Implementacja zmian i ponowny audyt}
+W rozdziale omówiono zmiany wprowadzone do aplikacji. Koniecznoœæ ich wprowadzenia wynik³a z analizy podsumowania przeprowadzonego wczeœniej audytu bezpieczeñstwa.
+Po wprowadzeniu zmian przeprowadzono finalny audyt. Jego wyniki omówiono na koñcu rozdzia³u.
 
 \section{Limit prób logowañ}
 W celu ograniczenia du¿ej liczby ¿¹dañ pojawiaj¹cych siê w krótkim zakresie czasu na stronie logowania zdecydowano siê zadeklarowaæ limity. U¿yto do tego funkcji z biblioteki \texttt{flask\_limiter} i \texttt{flask\_limiter.util} jak na listingu~\ref{lst:limitLogowan}. 
@@ -43,7 +44,7 @@ if not haslo:
 \end{lstlisting}
 
 \section{Weryfikacja nazwy u¿ytkownika i adresu e-mail}
-Równie¿ w tej implementacji wykorzystano funkcjê widoczn¹ na listingu~\ref{lst:bibliotekiWalidacja}. Wed³ug modelu fizycznego bazy danych (rys.~\ref{fig:Rys03/ModelFizyczny}) wartoœci e-mil oraz login powinny byæ unikalne dla ka¿dego u¿ytkownika. Przy rejestracji dopisano kod weryfikuj¹cy, czy wpisany e-mail lub login nie  zosta³ ju¿ u¿yty w bazie przez inne konto. Je¿eli tak, to wyœwietla odpowiednia informacjê (lis.~\ref{lst:weryfikacja}).
+Równie¿ w tej implementacji wykorzystano funkcjê widoczn¹ na listingu~\ref{lst:bibliotekiWalidacja}. Wed³ug modelu fizycznego bazy danych (rys.~\ref{fig:Rys02/ModelFizyczny}) wartoœci e-mil oraz login powinny byæ unikalne dla ka¿dego u¿ytkownika. Przy rejestracji dopisano kod weryfikuj¹cy, czy wpisany e-mail lub login nie  zosta³ ju¿ u¿yty w bazie przez inne konto. Je¿eli tak, to wyœwietla odpowiednia informacjê (lis.~\ref{lst:weryfikacja}).
 
 \begin{lstlisting}[language=Python, caption={Weryfikacja loginu i e-mailu podczas rejestracji}, label={lst:weryfikacja}, showstringspaces=false, basicstyle=\footnotesize\ttfamily]
 szukanieEmailu = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -72,3 +73,35 @@ if not re.search('[!@#$%^&*()\-_=+[{\]}\\|;:/?.>,<]', haslo) or not re.search('[
 
 hashHaslo = blake2b(('b'+haslo).encode('utf-8')).hexdigest()
 \end{lstlisting}
+
+
+\section{Ponowne przeprowadzenie audytu}
+\subsection{Opis audytu}
+Po wprowadzeniu zmian ponownie przeprowadzono audyt bezpieczeñstwa. Œrodowisko testowe pozosta³o takie samo jak na rysunku~\ref{fig:Rys04/srodowisko}. Identyczny by³ te¿ rodzaj przeprowadzonego auty oraz wykonane kroki. 
+
+Wyszukano paramentów GET komend¹ \texttt{sqlmap -u 192.168.1.46:4449/}. Wynik okaza³ siê taki sam jak na rysunku~\ref{fig:Rys04/SQLMap1.png}. Nastêpnie uruchomiono polecenie \texttt{sqlmap -u~192.168.1.46:4449/ -crawl=2}. Rezultat pozosta³ jak na pokazanym wczeœniej rysunku~\ref{fig:Rys04/SQLMap2.png}. Nastêpnie u¿yto komendy \texttt{sqlmap -wizard} w konfiguracji jak na rysunku~\ref{fig:Rys04/SQLMap4.png}. Tym razem komunikat pojawiaj¹cy siê w konsoli aplikacji zmieni³ siê. Informuje on o przekroczonej iloœci prób logowañ na godzinê (rys.~\ref{fig:Rys06/Error.png}).
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.55]{Rys06/Error.png}
+\caption{Konsola aplikacji}
+\label{fig:Rys06/Error.png}
+\end{figure}
+
+Skorzystano te¿ polecenia \texttt{sqlmap -wizard}, tym razem skonfigurowanego jak na rysunku~\ref{fig:Rys04/SQLMap3.png}. Skan zakoñczy³ siê bez zawieszenia aplikacji. Jednak aplikacja przyjmowa³a bardzo du¿o ¿¹dañ POST w ma³ym przedziale czasu (rys.~\ref{fig:Rys06/Error2.png}). 
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.55]{Rys06/Error2.png}
+\caption{Konsola aplikacji}
+\label{fig:Rys06/Error2.png}
+\end{figure}
+
+Nastêpnie u¿yto narzêdzia Metasploit i za³adowano plugin WMAP. Skonfigurowano go opieraj¹c siê na rysunku~\ref{Rys04/Metasploit1.png}. Jego wynik oraz przebieg nie zmieni³ siê, co widaæ przy porównaniu z wczeœniej pokazanym wycinkiem z konsoli aplikacji (rys.~\ref{Rys04/console2.png})
+
+Na koñcu wykorzystano ponownie exploit \texttt{scanner/mysql/mysql\_login}. Ustawiono go zgodnie z rysunkiem~\ref{Rys04/Metasploit2.png} i, jak wczeœniej, nie uda³o siê go uruchomiæ (rys~\ref{Rys04/Metasploit3.png}).
+
+\subsection{Ocena zaimplementowanych zmian}
+Przeprowadzony ponownie audyt wykaza³, i¿ zaimplementowane zmiany w aplikacji zmniejszy³y jej podatnoœæ na ataki. Nie znaleziono ¿adnych parametrów POST i GET, które mo¿na wykorzystaæ do udanego w³amania. Wprowadzono limity prób logowania siê dla u¿ytkowników, aby ochroniæ funkcjê przed skanami oraz atakuj¹cymi, którzy rêcznie chc¹ siê w³amaæ na konto. 
+
+Ponadto wprowadzona polityka jakoœci oraz cieniowania has³a zwiêksza jego bezpieczeñstwo przy przesy³aniu miêdzy klientem, a serwerem aplikacji webowej. Nie wprowadzono jednak zaproponowanego protoko³u HTTPS, który szyfrowa³by po³¹czenie. Rozwi¹zano natomiast wa¿ny problem z wy³¹czaj¹c¹ siê aplikacj¹, przy tworzeniu konta z loginem lub adresem e-mail, które s¹ ju¿ przypisane do innego istniej¹cego konta. 
+
+Podczas audyty zidentyfikowano problem obs³ugi bardzo du¿ej iloœci ¿¹dañ w ma³ym zakresie czasu.
