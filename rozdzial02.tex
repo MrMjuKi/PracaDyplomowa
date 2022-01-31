@@ -44,30 +44,30 @@ Modelowanie schematów baz danych mo¿e odbywaæ siê z wykorzystaniem ró¿nych notac
 
 
 \subsection{Uproszczony model konceptualny}
-Pierwszy z przedstawionych modeli pokazuje encje oraz wystêpuj¹ce pomiêdzy nimi relacje (rys.~\ref{fig:Rys03/UproszczonyModelKonceptualny}). Schemat bazy danych opiera siê na tabeli \texttt{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \texttt{U¿ytkownik} oraz \texttt{Personalia} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \texttt{Personalia} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \texttt{U¿ytkownik} i \texttt{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne.
+Pierwszy z przedstawionych modeli pokazuje encje oraz wystêpuj¹ce pomiêdzy nimi relacje (rys.~\ref{fig:Rys02/UproszczonyModelKonceptualny}). Schemat bazy danych opiera siê na tabeli \texttt{U¿ytkownik}. Jako jedyna posiada ona relacje z pozosta³ymi encjami. Miêdzy tabel¹ \texttt{U¿ytkownik} oraz \texttt{Personalia} istnieje relacja identyfikuj¹ca. Mówi ona o tym, ¿e tabela \texttt{Personalia} dziedziczy klucz g³ówny od tabeli U¿ytkownik. W przypadku relacji pomiêdzy encj¹ \texttt{U¿ytkownik} i \texttt{Oferta} istnieje relacja nieidentyfikuj¹ca, poniewa¿ obie tabele posiadaj¹ dwa ró¿ne klucze g³ówne.
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=1.6]{Rys03/UproszczonyModelKonceptualny}
+\includegraphics[scale=1.6]{Rys02/UproszczonyModelKonceptualny}
 \caption{Uproszczony model konceptualny}
-\label{fig:Rys03/UproszczonyModelKonceptualny}
+\label{fig:Rys02/UproszczonyModelKonceptualny}
 \end{figure}
 
 \subsection{Rozszerzony model konceptualny}
-Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wersjê jak na rysunku~\ref{fig:Rys03/ModelLogiczny}. Tabele w tym modelu posiadaj¹ dwie kolumny: w lewej wpisywane s¹ oznaczenia kluczy (jeœli dany atrybut jest kluczem), w prawej zaœ nazwy atrybutów. Ka¿da encja posiada klucz g³ówny (ang.~\emph{primary key}, PK). Encje \texttt{U¿ytkownik} i \texttt{Oferta} posiadaj¹ kolejno klucze g³ówne o nazwie \texttt{ID\_u¿ytkownika} oraz \texttt{ID\_oferty}. Encja \texttt{Pesonalia} dziedziczy klucz g³ówny od encji \texttt{U¿ytkownik}, który jest zarazem kluczem obcym (ang.~\emph{foreign key}, FK). Ponadto encja \texttt{Oferta} dziedziczy g³ówny klucz encji \texttt{U¿ytkownik} jako klucz obcy. Pod kluczami wypisano wszystkie indeksy jakie nale¿¹ do poszczególnych encji.
+Korzystaj¹c z uproszczonego modelu konceptualnego stworzono jego rozszerzon¹ wersjê jak na rysunku~\ref{fig:Rys02/ModelLogiczny}. Tabele w tym modelu posiadaj¹ dwie kolumny: w lewej wpisywane s¹ oznaczenia kluczy (jeœli dany atrybut jest kluczem), w prawej zaœ nazwy kolumn. Ka¿da encja posiada klucz g³ówny (ang.~\emph{primary key}, PK). Encje \texttt{U¿ytkownik} i \texttt{Oferta} posiadaj¹ kolejno klucze g³ówne o nazwie \texttt{ID\_u¿ytkownika} oraz \texttt{ID\_oferty}. Encja \texttt{Pesonalia} dziedziczy klucz g³ówny od encji \texttt{U¿ytkownik}, który jest zarazem kluczem obcym (ang.~\emph{foreign key}, FK). Ponadto encja \texttt{Oferta} dziedziczy g³ówny klucz encji \texttt{U¿ytkownik} jako klucz obcy. Pod kluczami wypisano wszystkie kolumny jakie nale¿¹ do poszczególnych encji.
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=1.6]{Rys03/ModelLogiczny}
+\includegraphics[scale=1.6]{Rys02/ModelLogiczny}
 \caption{Rozszerzony model konceptualny}
-\label{fig:Rys03/ModelLogiczny}
+\label{fig:Rys02/ModelLogiczny}
 \end{figure}
 
 \subsection{Model fizyczny}
-Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny jak na rysunku~\ref{fig:Rys03/ModelFizyczny}). Podczas nazywania elementów tego modelu zrezygnowano z u¿ywania polskich znaków diakrytycznych. Encje maj¹ po dwie kolumny: lewa zawiera nazwy indeksów, oznaczenia kluczy g³ównych i obcych, natomiast w prawej kolumnie okreœlono cechy poszczególnych indeksów. Znaczenia u¿ytych skrótów wyjaœniono poni¿ej.
+Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny jak na rysunku~\ref{fig:Rys02/ModelFizyczny}). Podczas nazywania elementów tego modelu zrezygnowano z u¿ywania polskich znaków diakrytycznych. Encje maj¹ po dwie kolumny: lewa zawiera nazwy kolumn, oznaczenia kluczy g³ównych i obcych, natomiast w prawej kolumnie okreœlono cechy poszczególnych danych. Znaczenia u¿ytych skrótów wyjaœniono poni¿ej.
 \begin{itemize}[leftmargin=1cm]
 \item ograniczenia:
 \begin{itemize}
-	\item \texttt{NOT NULL} -- indeks nigdy nie mo¿e przyj¹æ, przechowywaæ wartoœci \texttt{NULL},
-	\item \texttt{UNIQUE} -- indeks musi posiadaæ inn¹ wartoœæ dla ka¿dego wpisu w encji,
+	\item \texttt{NOT NULL} -- nigdy nie mo¿e przyj¹æ, przechowywaæ wartoœci \texttt{NULL},
+	\item \texttt{UNIQUE} -- musi posiadaæ inn¹ wartoœæ dla ka¿dego wpisu w encji,
 \end{itemize}
 \item typy danych:
 	\begin{itemize}
@@ -80,26 +80,27 @@ Opieraj¹c siê na rozszerzonym modelu konceptualnym sporz¹dzono model fizyczny ja
 
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=1.4]{Rys03/ModelFizyczny}
+\includegraphics[scale=1.4]{Rys02/ModelFizyczny}
 \caption{Model fizyczny}
-\label{fig:Rys03/ModelFizyczny}
+\label{fig:Rys02/ModelFizyczny}
 \end{figure}
 
 \subsection{Generowanie bazy danych}
-Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (ang.~\emph{Enhanced entity-relationship}), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (rys.~\ref{fig:Rys03/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (rys.~\ref{fig:Rys03/Success.png}).
+Stosuj¹c ostatni z przedstawionych modeli, czyli model fizyczny, i narzêdzie MySQL Workbench wygenerowano bazê danych. Najpierw skorzystano z edytora diagramu EER (ang.~\emph{Enhanced entity-relationship}), aby stworzyæ za jego pomoc¹ odpowiednik przedstawionego modelu fizycznego (rys.~\ref{fig:Rys02/EERDiagram.png}). W kolejnym kroku wybrano opcjê generowania bazy na podstawie stworzonego diagramu. Proces ten zakoñczy³ siê sukcesem (rys.~\ref{fig:Rys02/Success.png}).
 \begin{figure}[htb] 
 \centering
-\includegraphics[scale=0.8]{Rys03/EERDiagram.png}
+\includegraphics[scale=0.8]{Rys02/EERDiagram.png}
 \caption{Diagram EER utworzony w MySQL Workbench}
-\label{fig:Rys03/EERDiagram.png}
+\label{fig:Rys02/EERDiagram.png}
 \end{figure}
 
 \newpage
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=0.36]{Rys03/Success.png} % TO DO: Czy da siê zrobiæ zmniejszyæ okno i dopiero potem zrobiæ zrzut z ekranu? Obecny zrzut ma za du¿o bia³ej przestrzeni. Przy zawê¿onym oknie mo¿e uda siê upchaæ rysunek na jednej stronie z rysunkiem poprzednim.
+\includegraphics[scale=0.68]{Rys02/Success.png} % TO DO: Czy da siê zrobiæ zmniejszyæ okno i dopiero potem zrobiæ zrzut z ekranu? Obecny zrzut ma za du¿o bia³ej przestrzeni. Przy zawê¿onym oknie mo¿e uda siê upchaæ rysunek na jednej stronie z rysunkiem poprzednim.
+%ODP to jest najmniejszy mo¿liwy rozmiar okna. Przyci¹³em zrzut ekranu, aby usn¹æ bia³¹ przestrzeñ
 \caption{Pozytywnie zakoñczone tworzenie bazy w MySQL Workbench}
-\label{fig:Rys03/Success.png}
+\label{fig:Rys02/Success.png}
 \end{figure}
 
 \section{Implementacja aplikacji}
