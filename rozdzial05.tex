@@ -13,11 +13,11 @@ from flask_limiter.util import get_remote_address
 limiter = Limiter(app, key_func=get_remote_address)
 \end{lstlisting}
 \begin{lstlisting}[language=Python, caption=Skonfigurowanie limitu logowañ, label={lst:logowanieLimit}, basicstyle=\footnotesize\ttfamily]
-@limiter.limit("5/hour")
+@limiter.limit("5/hour", error_message='Osiagnieto limit pieciu prob zalogowania sie. Sprobuj za godzine')
 # tutaj funkcja podstrony logowania siê 
 \end{lstlisting}
 
-Dodatkowo dla b³êdu 429 ustawiono informacjê ,,Przekroczyles limit zadan'' (lis.~\ref{lst:429error}).
+Dodatkowo dla b³êdu 429 ustawiono informacjê ,,Przekroczyles limit ¿¹dañ'' (lis.~\ref{lst:429error}).
 \begin{lstlisting}[language=Python, caption=Skonfigurowanie informacji przy b³êdzie 429, label={lst:429error}, showstringspaces=false, basicstyle=\footnotesize\ttfamily]
 @app.errorhandler(429)
 def ratelimit_handler():
@@ -72,6 +72,3 @@ if not re.search('[!@#$%^&*()\-_=+[{\]}\\|;:/?.>,<]', haslo) or not re.search('[
 
 hashHaslo = blake2b(('b'+haslo).encode('utf-8')).hexdigest()
 \end{lstlisting}
-
-\section{Implementacja protoko³u HTTPS}
-%Zastanawiam siê implementcj¹
