@@ -1,10 +1,10 @@
 \chapter{Audyt}
-Niniejszy rozdzia³ skupia siê na wykonaniu testów bezpieczeñstwa. Przeprowadzany audyt jest rodzajem bia³ej skrzynki, czyli podczas jego trwania audytor posiada pe³en wgl¹d w kod Ÿród³owy badanego obiektu i inne poufne informacje. Wyniki zostan¹ przeanalizowane pod k¹tem mo¿liwoœci wprowadzenia zmian w aplikacji zwiêkszaj¹cych jej bezpieczeñstwo.\section{Przygotowanie œrodowiska}
+Niniejszy rozdzia³ poœwiêcono opisowi wykonanych testów bezpieczeñstwa. Przeprowadzany audyt jest rodzajem bia³ej skrzynki, czyli podczas jego trwania audytor posiada pe³en wgl¹d w~kod Ÿród³owy badanego obiektu i inne poufne informacje. Wyniki zostan¹ przeanalizowane pod k¹tem mo¿liwoœci wprowadzenia zmian w aplikacji zwiêkszaj¹cych jej bezpieczeñstwo.\section{Przygotowanie œrodowiska}
 Audyt zostanie przeprowadzony w œrodowisku sk³adaj¹cym siê z dwóch urz¹dzeñ bêd¹cych w~jednej podsieci oraz routera. Jeden z komputerów obs³uguje system Windows 10 z uruchomion¹ aplikacjê i bêdzie pe³ni³ funkcjê atakowanego obiektu. Drugi zaœ ma zainstalowany system operacyjny Kali Linux i pos³u¿y za stronê atakuj¹c¹. Adresy IP oraz sposoby komunikacji urz¹dzeñ pokazano na rysunku~\ref{fig:Rys04/srodowisko}.
 
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=0.8]{Rys04/srodowisko}
+\includegraphics[scale=1.4]{Rys04/srodowisko}
 \caption{Œrodowisko audytu}
 \label{fig:Rys04/srodowisko}
 \end{figure}
@@ -15,26 +15,26 @@ Na wstêpie przeskanowano g³ówn¹ stronê w poszukiwaniu parametrów GET, które mo¿n
 
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=0.9]{Rys04/SQLMap1.png}
+\includegraphics[scale=0.85]{Rys04/SQLMap1.png}
 \caption{Wynik komendy \texttt{sqlmap -u 192.168.1.46:4449/}}
 \label{fig:Rys04/SQLMap1.png}
 \end{figure}
 
-Narzêdzie nie znalaz³o ¿adnego parametru, lecz zaleci³o uruchomienie komendy ponownie z~prze³¹czk¹ \texttt{crawl} (okreœla jak g³êboko skanuje podstrony)  o wartoœci 2. Przeszukuje ona podstrony w celu znalezienia parametrów GET, do których mo¿na siê dostaæ przez stronê napisan¹ w komendzie. W tym przypadku jest to strona g³ówna. W dalszej kolejnoœci wybrano opcjê, aby sprawdziæ pliki .xml (je¿eli znajdzie) oraz liczbê w¹tków. Finalnie skan nie znalaz³ ¿adnej podatnoœci (rys.~\ref{fig:Rys04/SQLMap2.png}). Nie uda³o siê zlokalizowaæ parametrów GET do wykonania ataku. W~nastêpnej czêœci wykonane zostan¹ próby poszukania parametrów POST.
+Narzêdzie nie znalaz³o ¿adnego parametru, lecz zaleci³o uruchomienie komendy ponownie z~prze³¹czk¹ \texttt{crawl} (okreœla jak g³êboko skanuje podstrony)  o wartoœci 2. Przeszukuje ona podstrony w celu znalezienia parametrów GET, do których mo¿na siê dostaæ przez stronê napisan¹ w komendzie. W tym przypadku jest to strona g³ówna. W dalszej kolejnoœci wybrano opcjê, aby sprawdziæ pliki \texttt{.xml} (je¿eli znajdzie) oraz liczbê w¹tków. Finalnie skan nie znalaz³ ¿adnej podatnoœci (rys.~\ref{fig:Rys04/SQLMap2.png}). Nie uda³o siê zlokalizowaæ parametrów GET do wykonania ataku. W~nastêpnej czêœci wykonane zostan¹ próby poszukania parametrów POST.
 
 %\newpage
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=0.9]{Rys04/SQLMap2.png}
+\includegraphics[scale=0.85]{Rys04/SQLMap2.png}
 \caption{Wynik komendy \texttt{sqlmap -u 192.168.1.46:4449/ --crawl=2}}
 \label{fig:Rys04/SQLMap2.png}
 \end{figure}
 
-W celu przetestowania funkcjonalnoœci logowania siê, zdecydowano siê na u¿ycie interaktywnego kreatora. Za jego pomoc¹ wpisuje siê wszystkie podstawowe, wymagane informacje potrzebne do przeprowadzenia skanu np. adres URL (ang.~\emph{Uniform Resource Locator}) oraz wybiera siê pule ataków, które maj¹ zostaæ przeprowadzone (rys.~\ref{fig:Rys04/SQLMap4.png}). W trakcie jego wykonywania mo¿na zobaczyæ jak wiele ¿¹dañ POST jest wysy³anych w bardzo w¹skim zakresie czasu (rys.~\ref{Rys04/console.png}). Przy skanowaniu nie wykryto podatnoœci.
+W celu przetestowania funkcjonalnoœci logowania siê, zdecydowano siê na u¿ycie interaktywnego kreatora. Za jego pomoc¹ wpisuje siê wszystkie podstawowe, wymagane informacje potrzebne do przeprowadzenia skanu np.\ adres URL (ang.~\emph{Uniform Resource Locator}) oraz wybiera siê pule ataków, które maj¹ zostaæ przeprowadzone (rys.~\ref{fig:Rys04/SQLMap4.png}). W trakcie jego wykonywania mo¿na zobaczyæ jak wiele ¿¹dañ POST jest wysy³anych w bardzo w¹skim zakresie czasu (rys.~\ref{Rys04/console.png}). Przy skanowaniu nie wykryto podatnoœci.
 
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=0.7]{Rys04/SQLMap4.png}
+\includegraphics[scale=0.65]{Rys04/SQLMap4.png}
 \caption{Wynik komendy \texttt{sqlmap -wizard}}
 \label{fig:Rys04/SQLMap4.png}
 \end{figure}
@@ -51,14 +51,14 @@ Nastêpne skany maj¹ na celu sprawdzenie metodê rejestrowania siê. Podobnie jak w
 
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=0.63]{Rys04/SQLMap3.png}
+\includegraphics[scale=0.65]{Rys04/SQLMap3.png}
 \caption{Wynik komendy \texttt{sqlmap -wizard}}
 \label{fig:Rys04/SQLMap3.png}
 \end{figure}
 
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=1.3]{Rys04/error.png}
+\includegraphics[scale=0.9]{Rys04/error.png}
 \caption{B³¹d w kodzie aplikacji}
 \label{Rys04/error.png}
 \end{figure}
@@ -66,7 +66,6 @@ Nastêpne skany maj¹ na celu sprawdzenie metodê rejestrowania siê. Podobnie jak w
 \subsection{Skan narzêdziem Metasploit}
 Kolejnym narzêdziem wykorzystanym przy audycie jest Metasploit. Na wstêpie u¿yto plugin WMAP, który jest paczk¹ podatnoœci wykorzystywan¹ do testowania webowych aplikacji. Za³adowano go, a nastêpnie ustawiono URL strony oraz podstron, które zostan¹ zaatakowane i na koñcu uruchomiono skan (rys.~\ref{Rys04/Metasploit1.png}). W konsoli aplikacji zaobserwowano bardzo du¿y przyp³yw ¿¹dañ (rys.~\ref{Rys04/console2.png}).
 
-\newpage
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.8]{Rys04/Metasploit1.png}
@@ -76,12 +75,13 @@ Kolejnym narzêdziem wykorzystanym przy audycie jest Metasploit. Na wstêpie u¿yto
 
 \begin{figure}[htb]
 \centering
-\includegraphics[scale=0.52]{Rys04/console2.png}
+\includegraphics[scale=0.48]{Rys04/console2.png}
 \caption{Konsola aplikacji}
 \label{Rys04/console2.png}
 \end{figure}
+\newpage
 
-Na koñcu wybrano exploit \texttt{scanner/mysql/mysql\_login} w celu odgadniêcia loginu i has³a do us³ugi bazy danych MySQL. Na rysunku~\ref{Rys04/Metasploit2.png} pokazano skonfigurowany poprawnie atak. Plik \texttt{rockyou.txt} zawiera listê najczêœcniej wykorzystywanych wyrazów jako login lub has³o. Kolejny ekranu pokazuje próbê uruchomienia exploita, która zakoñczy³a siê niepowodzeniem (rys~\ref{Rys04/Metasploit3.png}).
+Na koñcu wybrano exploit \texttt{scanner/mysql/mysql\_login} w celu odgadniêcia loginu i has³a do us³ugi bazy danych MySQL. Na rysunku~\ref{Rys04/Metasploit2.png} pokazano skonfigurowany poprawnie atak. Plik \texttt{rockyou.txt} zawiera listê najczyœciej wykorzystywanych wyrazów jako login lub has³o. Kolejny zrzut ekranu pokazuje próbê uruchomienia exploita, która zakoñczy³a siê niepowodzeniem (rys.~\ref{Rys04/Metasploit3.png}).
 
 \begin{figure}[htb]
 \centering
@@ -96,6 +96,9 @@ Na koñcu wybrano exploit \texttt{scanner/mysql/mysql\_login} w celu odgadniêcia 
 \caption{Wynik pluginu WMAP}
 \label{Rys04/Metasploit3.png}
 \end{figure}
+\newpage
 
 \section{Analiza znalezionych podatnoœci}
-Na podstawie wykonanego audytu zlokalizowano kilka s³aboœci aplikacji. Dla funkcji logowania nie znaleziono podatnoœci, natomiast nie posiada ona limitu logowañ w danym zakres czasu. Nara¿a j¹ to na przyjmowanie bardzo du¿ej iloœci ¿¹dañ od klienta w krótkim przedziale czasu, co mo¿e spowodowaæ zwolnienie dzia³ania lub jej ca³kowite wy³¹czenie siê. Podczas tworzenia konta nie wszystkie pola posiadaj¹ sprawdzanie poprawnoœci wprowadzonych wartoœci. Dodatkowo funkcja nie weryfikuje, czy u¿ytkownik o wpisanym loginie ju¿ istnieje w bazie. Obie podatnoœci wp³ywaj¹ krytycznie na dzia³anie aplikacji, poniewa¿ j¹ wy³¹czaj¹. Niezanotowano równie¿ ¿adnych minimalnych wymagañ co do jakoœci has³a takich jak: du¿a litera, znak specjalny, cyfra. Dane przy audytowanych funkjonalnoœciach przesy³ane s¹ miêdzy klientem a~serwerem aplikacji jawnie. U¿ywaj¹ one protok³u HTTP (ang.~\emph{Hypertext Transfer Protocol}), który ich nie szyfruje i nie korzysta z certyfikatu SSL (ang.~\emph{Secure Sockets Layer}).   
+Na podstawie wykonanego audytu zlokalizowano kilka s³aboœci aplikacji. Dla funkcji logowania nie znaleziono krytycznych podatnoœci. Jednak nie posiada ona limitu logowañ w danym zakres czasu. Nara¿a j¹ to na przyjmowanie bardzo du¿ej iloœci ¿¹dañ od klienta w krótkim przedziale czasu, co mo¿e spowodowaæ zwolnienie dzia³ania lub jej ca³kowite wy³¹czenie siê. 
+
+Podczas tworzenia konta nie wszystkie pola s¹ sprawdzane pod k¹tem poprawnoœci wprowadzonych wartoœci. Dodatkowo funkcja nie weryfikuje, czy u¿ytkownik o wpisanym loginie ju¿ istnieje w bazie. Obie podatnoœci wp³ywaj¹ krytycznie na dzia³anie aplikacji, poniewa¿ j¹ wy³¹czaj¹. Nie zanotowano równie¿ ¿adnych minimalnych wymagañ co do jakoœci has³a takich jak: du¿a litera, znak specjalny, cyfra. Dane przy audytowanych funkcjach przesy³ane s¹ miêdzy klientem a~serwerem aplikacji jawnie. U¿ywaj¹ one protoko³u HTTP (ang.~\emph{Hypertext Transfer Protocol}), który ich nie szyfruje i nie korzysta z certyfikatu SSL (ang.~\emph{Secure Sockets Layer}).   

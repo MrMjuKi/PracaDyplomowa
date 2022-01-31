@@ -1,24 +1,24 @@
 \chapter{Implementacja zmian w aplikacji}
-Obecny rozdzia³ skupia siê na zmianach dokonanych w aplikacji, które zwiêksz¹ jej bezpieczeñstwo. Poprawki w kodzie wynikaj¹ z analizy podsumowania przeprowadzonego audytu we wczeœniejszej czêœci pracy.
+W rozdziale skupiono siê na dokonanych zmianach w aplikacji zwiêkszaj¹cych jej bezpieczeñstwo. Poprawki w kodzie wynikaj¹ z analizy podsumowania przeprowadzonego audytu.
 
 \section{Limit prób logowañ}
-W celu ograniczenia du¿ej iloœci ¿¹dañ pojawiaj¹cych siê w krótkim zakresie czasu na stronie logowania zdecydowano siê zadeklarowaæ limity. U¿yto do tego funkcji z biblioteki \texttt{flask\_limiter} i \texttt{flask\_limiter.util} jak na listingu~\ref{lst:limitLogowan}. Skonfigurowanie wymaga³o zadeklarowania globalnej informacji, jakiej aplikacji oraz adresu IP tyczy siê limit (lis.~\ref{lst:globalLimiter}). Dla podstrony logowanie skonfigurowano maksymalnie piêæ logowañ na godzinê (lis.~\ref{lst:logowanieLimit}). Dodatkowo dla b³êdu 429 ustawiono informacjê ''Przekroczyles limit zadan'' (lis.~\ref{lst:429error}).
-
+W celu ograniczenia du¿ej liczby ¿¹dañ pojawiaj¹cych siê w krótkim zakresie czasu na stronie logowania zdecydowano siê zadeklarowaæ limity. U¿yto do tego funkcji z biblioteki \texttt{flask\_limiter} i \texttt{flask\_limiter.util} jak na listingu~\ref{lst:limitLogowan}. 
+Wymaga³o to globalnej deklaracji aplikacji oraz adresu IP, których dotyczy limit (lis.~\ref{lst:globalLimiter}). 
+Dla podstrony logowanie skonfigurowano maksymalnie piêæ logowañ na godzinê (lis.~\ref{lst:logowanieLimit}). 
 \begin{lstlisting}[language=Python, caption=Biblioteki u¿yte przy konfiguracji limitów, label={lst:limitLogowan}, basicstyle=\footnotesize\ttfamily]
 flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 \end{lstlisting}
-
 \begin{lstlisting}[language=Python, caption=Globalna konfiguracja limitera, label={lst:globalLimiter}, basicstyle=\footnotesize\ttfamily]
 limiter = Limiter(app, key_func=get_remote_address)
 \end{lstlisting}
-
 \begin{lstlisting}[language=Python, caption=Skonfigurowanie limitu logowañ, label={lst:logowanieLimit}, basicstyle=\footnotesize\ttfamily]
 @limiter.limit("5/hour")
 # tutaj funkcja podstrony logowania siê 
 \end{lstlisting}
 
-\begin{lstlisting}[language=Python, caption=Skonfigurowanie informacji przy b³êdzie 429, label={lst:429error}, basicstyle=\footnotesize\ttfamily]
+Dodatkowo dla b³êdu 429 ustawiono informacjê ,,Przekroczyles limit zadan'' (lis.~\ref{lst:429error}).
+\begin{lstlisting}[language=Python, caption=Skonfigurowanie informacji przy b³êdzie 429, label={lst:429error}, showstringspaces=false, basicstyle=\footnotesize\ttfamily]
 @app.errorhandler(429)
 def ratelimit_handler():
   return "Przekroczyles limit zadan"
@@ -31,7 +31,7 @@ Aby zapobiec pojawianiu siê b³êdów znalezionych na podstronie rejestracji utworz
 import re
 \end{lstlisting}
 
-\begin{lstlisting}[language=Python, caption={Skonfigurowanie walidaji pola login, e-mail i has³o}, label={lst:walidacjeRejestracja}, basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[language=Python, caption={Skonfigurowanie walidaji pola login, e-mail i has³o}, label={lst:walidacjeRejestracja}, showstringspaces=false, basicstyle=\footnotesize\ttfamily]
 if not uzytkownik.isalnum():
 	return render_template('index.html', msg ='Zla nazwa uzytkownika')
 
@@ -45,7 +45,7 @@ if not haslo:
 \section{Weryfikacja nazwy u¿ytkownika i adresu e-mail}
 Równie¿ w tej implementacji wykorzystano funkcjê widoczn¹ na listingu~\ref{lst:bibliotekiWalidacja}. Wed³ug modelu fizycznego bazy danych (rys.~\ref{fig:Rys03/ModelFizyczny}) wartoœci e-mil oraz login powinny byæ unikalne dla ka¿dego u¿ytkownika. Przy rejestracji dopisano kod weryfikuj¹cy, czy wpisany e-mail lub login nie  zosta³ ju¿ u¿yty w bazie przez inne konto. Je¿eli tak, to wyœwietla odpowiednia informacjê (lis.~\ref{lst:weryfikacja}).
 
-\begin{lstlisting}[language=Python, caption={Weryfikacja loginu i e-mailu podczas rejestracji}, label={lst:weryfikacja}, basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[language=Python, caption={Weryfikacja loginu i e-mailu podczas rejestracji}, label={lst:weryfikacja}, showstringspaces=false, basicstyle=\footnotesize\ttfamily]
 szukanieEmailu = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 szukanieEmailu.execute('SELECT `e-mail` FROM personalia WHERE `e-mail` =  % s', [email])
 mysql.connection.commit
@@ -66,7 +66,7 @@ Do zaprogramowania obu zmian wykorzystano biblioteki widoczne na listingu~\ref{l
 from hashlib import blake2b
 \end{lstlisting}
 
-\begin{lstlisting}[language=Python, caption={Sprawdzanie jakoœci i cieniowanie has³a}, label={lst:jakoscICieniowanieHasla}, basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[language=Python, caption={Sprawdzanie jakoœci i cieniowanie has³a}, label={lst:jakoscICieniowanieHasla}, showstringspaces=false, basicstyle=\footnotesize\ttfamily]
 if not re.search('[!@#$%^&*()\-_=+[{\]}\\|;:/?.>,<]', haslo) or not re.search('[a-z]', haslo) or  not re.search('[A-Z]', haslo) or not re.search('[0-9]', haslo) or len(haslo)<8:
 	return render_template('index.html', msg ='Zbyt slabe haslo')
 
