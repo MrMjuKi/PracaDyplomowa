@@ -154,7 +154,7 @@ def rejestracja():
 \end{lstlisting}
 
 \subsubsection{Logowanie siê na konto}
-Funkcja zaczyna siê od potwierdzenia, czy u¿ytkownik jest zalogowany na konto. Je¿eli jest, to wyœwietla siê  strona domowa z odpowiednim komunikatem. W przeciwnym razie ³aduje siê podstrona umo¿liwiaj¹ca zalogowanie siê. Po naciœniêciu przycisku ,,Zaloguj siê'' wykonuje siê kwerenda SQL sprawdzaj¹ca, czy konto o podanym loginie i haœle istnieje w bazie. Jeœli znajduje to tworzy siê nowa sesja. Przechowuje ona dwie wartoœci \texttt{login} i \texttt{ID\_u¿ytkownika}. W przeciwnym wypadku ³adowana jest strona domowa z komunikatem o nieudanej próbie logowania (lis.~\ref{lst:logowanie}).   
+Funkcja zaczyna siê od potwierdzenia, czy u¿ytkownik jest zalogowany na konto. Je¿eli jest, to wyœwietla siê  strona domowa z odpowiednim komunikatem. W przeciwnym razie ³aduje siê podstrona umo¿liwiaj¹ca zalogowanie siê. Po naciœniêciu przycisku ,,Zaloguj siê'' wykonuje siê kwerenda SQL sprawdzaj¹ca, czy konto o podanym loginie i haœle istnieje w bazie. Jeœli znajduje to tworzy siê nowa sesja. Przechowuje ona dwie wartoœci \texttt{login} i \texttt{ID\_u¿ytkownika}. W~przeciwnym wypadku ³adowana jest strona domowa z komunikatem o nieudanej próbie logowania (lis.~\ref{lst:logowanie}).   
 \begin{lstlisting}[language=Python, caption=Funkcja wykonywana po wejœciu na podstronê \texttt{/logowanie}, label={lst:logowanie}, showstringspaces=false, basicstyle=\footnotesize\ttfamily]
 @app.route('/logowanie', methods=['GET', 'POST'])
 def logowanie():

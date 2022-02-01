@@ -95,7 +95,7 @@ Skorzystano te¿ polecenia \texttt{sqlmap -wizard}, tym razem skonfigurowanego ja
 \label{fig:Rys06/Error2.png}
 \end{figure}
 
-Nastêpnie u¿yto narzêdzia Metasploit i za³adowano plugin WMAP. Skonfigurowano go opieraj¹c siê na rysunku~\ref{Rys04/Metasploit1.png}. Jego wynik oraz przebieg nie zmieni³ siê, co widaæ przy porównaniu z wczeœniej pokazanym wycinkiem z konsoli aplikacji (rys.~\ref{Rys04/console2.png})
+Nastêpnie u¿yto narzêdzia Metasploit i za³adowano plugin WMAP. Skonfigurowano go opieraj¹c siê na rysunku~\ref{Rys04/Metasploit1.png}. Jego wynik oraz przebieg nie zmieni³ siê, co widaæ przy porównaniu z~wczeœniej pokazanym wycinkiem z konsoli aplikacji (rys.~\ref{Rys04/console2.png})
 
 Na koñcu wykorzystano ponownie exploit \texttt{scanner/mysql/mysql\_login}. Ustawiono go zgodnie z rysunkiem~\ref{Rys04/Metasploit2.png} i, jak wczeœniej, nie uda³o siê go uruchomiæ (rys~\ref{Rys04/Metasploit3.png}).
 
@@ -104,4 +104,4 @@ Przeprowadzony ponownie audyt wykaza³, i¿ zaimplementowane zmiany w aplikacji zm
 
 Ponadto wprowadzona polityka jakoœci oraz cieniowania has³a zwiêksza jego bezpieczeñstwo przy przesy³aniu miêdzy klientem, a serwerem aplikacji webowej. Nie wprowadzono jednak zaproponowanego protoko³u HTTPS, który szyfrowa³by po³¹czenie. Rozwi¹zano natomiast wa¿ny problem z wy³¹czaj¹c¹ siê aplikacj¹, przy tworzeniu konta z loginem lub adresem e-mail, które s¹ ju¿ przypisane do innego istniej¹cego konta. 
 
-Podczas audyty zidentyfikowano problem obs³ugi bardzo du¿ej iloœci ¿¹dañ w ma³ym zakresie czasu.
+Podczas audyty zidentyfikowano problem obs³ugi bardzo du¿ej iloœci ¿¹dañ w ma³ym zakresie czasu. Tak jak w przypadku logowania siê mo¿e w³yn¹æ na negatywnie na wydajnoœæ aplikacji.
